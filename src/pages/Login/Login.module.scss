@@ -1,0 +1,74 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    .form {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+
+        gap: 16px;
+        padding: 0 12px;
+
+        width: 100%;
+        max-width: 400px;
+        height: calc(100vh - $headerHeight);
+        transform: translateY(-10%);
+        .logo {
+            font-weight: 700;
+            font-size: 36px;
+        }
+        &__container {
+            display: flex;
+            align-items: center;
+            position: relative;
+
+            width: 100%;
+            .icon {
+                position: absolute;
+                top: 50%;
+                left: 10px;
+                transform: translateY(-50%);
+            }
+            input {
+                width: 100%;
+                height: 50px;
+
+                border: 1px solid #808080;
+                border-radius: 10px;
+                padding: 0 12px;
+                padding-left: 30px;
+
+                font-size: 16px;
+
+                &:hover {
+                    cursor: pointer;
+                }
+                &:active {
+                    color: #808080;
+                }
+            }
+        }
+
+        .loginBtn {
+            width: 100%;
+            height: 50px;
+
+            border: none;
+            border-radius: 10px;
+            background-color: #000000;
+            color: #ffffff;
+
+            font-size: 16px;
+
+            &:hover {
+                cursor: pointer;
+            }
+            &:active {
+                color: #808080;
+            }
+        }
+    }
+}

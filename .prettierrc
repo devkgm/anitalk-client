@@ -12,9 +12,9 @@
           }
         },
         {
-          "files": "*.css",
+          "files": "*.scss",
           "options": {
-            "parser": "css"
+            "parser": "scss"
           }
         }
       ]

@@ -1,5 +1,7 @@
-@import "./color.scss";
-@import "./font.scss";
+@import './color.scss';
+@import './font.scss';
+
+$headerHeight: 50px;
 
 * {
     padding: 0;
@@ -7,6 +9,6 @@
 
     box-sizing: border-box;
 
-    font-family: "Noto Sans KR", sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
     font-weight: 400;
 }
