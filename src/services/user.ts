@@ -1,12 +1,14 @@
 export const joinUser = async (user: User) => {
-    const result = await fetch(import.meta.env.VITE_BASE_URL + 'api/users', {
+    const res = await fetch(import.meta.env.VITE_BASE_URL + 'api/users', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(user),
     });
-    console.log(result);
+    const result = await res.json();
+    if (res.status === 200) return result;
+    else return false;
 };
 export const signInWithEmailAndPassword = async (user: User) => {
     const res = await fetch(import.meta.env.VITE_BASE_URL + 'api/login', {

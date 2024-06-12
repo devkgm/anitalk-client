@@ -2,10 +2,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import Board from './pages/Board/Board';
 import Login from './pages/Login/Login';
-import { RecoilRoot, useRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import MyPage from './pages/MyPage/MyPage';
 import { useEffect } from 'react';
 import { isLoggedInState, userState } from './recoil/auth';
+import SignUp from './pages/SignUp/SignUp';
 
 function App() {
     const [user, setUser] = useRecoilState(userState);
@@ -23,6 +24,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/board" element={<Board />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<SignUp />} />
                 <Route path="/mypage" element={<MyPage />} />
             </Routes>
         </BrowserRouter>

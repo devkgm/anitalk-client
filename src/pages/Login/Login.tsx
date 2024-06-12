@@ -1,4 +1,3 @@
-import Header from '@/components/Header/Header';
 import styles from './Login.module.scss';
 import { CiUser, CiLock } from 'react-icons/ci';
 import { useState } from 'react';
@@ -29,12 +28,14 @@ function Login() {
             console.log(result);
             localStorage.setItem('user', JSON.stringify(result.user));
             localStorage.setItem('token', JSON.stringify(result.token.token));
-            navigate(-1);
+            navigate('/');
         }
+    };
+    const handleSignUp = () => {
+        navigate('/signup');
     };
     return (
         <div className={styles.container}>
-            <Header />
             <form className={styles.form}>
                 <div className={styles.logo}>로그인</div>
                 <div className={styles.form__container}>
@@ -62,6 +63,9 @@ function Login() {
 
                 <button className={styles.loginBtn} onClick={handleSubmit}>
                     로그인
+                </button>
+                <button className={styles.signupBtn} onClick={handleSignUp}>
+                    회원가입
                 </button>
             </form>
         </div>
