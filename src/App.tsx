@@ -7,6 +7,7 @@ import MyPage from './pages/MyPage/MyPage';
 import { useEffect } from 'react';
 import { isLoggedInState, userState } from './recoil/auth';
 import SignUp from './pages/SignUp/SignUp';
+import Animation from './pages/Animation/Animation';
 
 function App() {
     const [user, setUser] = useRecoilState(userState);
@@ -26,6 +27,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/mypage" element={<MyPage />} />
+                <Route path="/animation/:animationId" element={<Animation />} />
             </Routes>
         </BrowserRouter>
     );
