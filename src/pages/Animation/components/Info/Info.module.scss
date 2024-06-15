@@ -1,0 +1,69 @@
+.container {
+    @include flex($dir: column);
+    align-items: start;
+
+    width: 100%;
+
+    .box {
+        @include flex($axis: flex-start);
+
+        width: 100%;
+
+        padding: 10px;
+        @include shadow;
+
+        background-color: white;
+
+        .thumbnail__container {
+            .thumbnail {
+                width: auto;
+                height: 200px;
+                object-fit: cover;
+            }
+        }
+        .info {
+            @include flex($dir: column);
+            align-items: start;
+
+            padding: 0 12px;
+            .title {
+                font-size: 32px;
+                font-weight: 600;
+                line-height: 100%;
+
+                margin-bottom: 5px;
+            }
+            &__detail {
+                @include flex($dir: column, $axis: flex-start);
+                align-items: start;
+
+                gap: 5px;
+
+                &__item {
+                    &::before {
+                        content: '🔹';
+                    }
+                }
+            }
+        }
+    }
+    .plot {
+        width: 100%;
+
+        margin-top: 10px;
+        background-color: white;
+        @include shadow;
+        .title {
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 100%;
+
+            padding: 10px;
+            margin-bottom: 5px;
+            border-bottom: 1px solid #ccc;
+        }
+        .content {
+            padding: 0 10px 10px 10px;
+        }
+    }
+}

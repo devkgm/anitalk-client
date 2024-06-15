@@ -1,0 +1,9 @@
+@mixin flex($axis: center, $dir: row) {
+    display: flex;
+    justify-content: $axis;
+    align-items: center;
+    flex-direction: $dir;
+}
+@mixin shadow {
+    box-shadow: 1px 3px 8px rgba(49, 49, 49, 0.1);
+}

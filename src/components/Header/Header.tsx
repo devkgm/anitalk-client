@@ -9,7 +9,9 @@ function Header() {
     return (
         <header className={styles.container}>
             <div className={styles.begin}>
-                <span className={styles.logo}>AniTalk</span>
+                <span className={styles.logo} onClick={() => navigate('/')}>
+                    AniTalk
+                </span>
                 <nav className={styles.nav}>
                     <button>커뮤니티</button>
                     <button>갤러리</button>

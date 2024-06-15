@@ -1,8 +1,10 @@
 @import './color.scss';
 @import './font.scss';
-
+@import './mixin.scss';
 $headerHeight: 50px;
-
+$footerHeight: 50px;
+$backgroundColor: #eff0f2;
+$mainColor: #05c474;
 * {
     padding: 0;
     margin: 0;
@@ -11,4 +13,7 @@ $headerHeight: 50px;
 
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 400;
+}
+body {
+    background-color: $backgroundColor;
 }
