@@ -5,6 +5,7 @@ import { getAnimation } from '@/services/animation';
 import { useParams } from 'react-router-dom';
 import Loading from '@/components/Loading/Loading';
 import Info from './components/Info/Info';
+import Board from './components/Board/Board';
 function Animation() {
     const { animationId } = useParams();
     const [animation, setAnimation] = useState<animation>(null);
@@ -13,6 +14,7 @@ function Animation() {
         const getData = async () => {
             try {
                 const data = await getAnimation(animationId);
+                console.log(data);
                 setAnimation(data);
             } catch (e) {
                 console.error(e);
@@ -27,6 +29,9 @@ function Animation() {
             <div className={styles.article}>
                 <div className={styles.info}>
                     <Info data={animation} />
+                </div>
+                <div className={styles.board}>
+                    <Board animationId={animation.id} />
                 </div>
             </div>
         </div>

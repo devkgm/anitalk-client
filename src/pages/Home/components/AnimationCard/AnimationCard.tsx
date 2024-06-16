@@ -6,7 +6,7 @@ interface Props {
 function AnimationCard({ data }: Props) {
     const navigate = useNavigate();
     const handleClickCard = () => {
-        navigate(`/animation/${data.id}`);
+        navigate(`/animations/${data.id}`);
     };
     return (
         <div className={styles.container} onClick={handleClickCard}>

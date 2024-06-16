@@ -1,7 +1,7 @@
 .container {
     @include flex($dir: column);
     .article {
-        @include flex($axis: flex-start);
+        @include flex($axis: flex-start, $dir: column);
         align-items: start;
 
         gap: 24px;

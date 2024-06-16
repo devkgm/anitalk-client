@@ -23,11 +23,11 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/board" element={<Board />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/mypage" element={<MyPage />} />
-                <Route path="/animation/:animationId" element={<Animation />} />
+                <Route path="/animations/:animationId" element={<Animation />} />
+                <Route path="/animations/:animationId/boards/:boardId" element={<Board />} />
             </Routes>
         </BrowserRouter>
     );
