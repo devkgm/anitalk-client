@@ -8,6 +8,7 @@ export const isLoggedInState = atom({
 export const userState = atom({
     key: 'userState',
     default: {
+        id: null,
         email: '',
         nickname: '',
     },

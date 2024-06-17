@@ -1,15 +1,14 @@
 interface board {
     id?: string;
-    animation_id?: string;
+    animationId?: string;
     title?: string;
     content?: string;
     hit?: number;
-    write_date?: string;
-    modify_date?: string;
-    is_deleted?: boolean;
+    writeDate?: string;
+    modifyDate?: string;
     ip?: string;
     nickname?: string;
     password?: string;
-    user_id?: string;
+    userId?: string;
     category?: string;
 }
