@@ -8,6 +8,7 @@ import Header from '@/components/Header/Header';
 import { getUserComments } from '@/services/comment';
 import Modal from '@/components/Modal/Modal';
 import PasswordChange from './components/PasswordChange/PasswordChange';
+import NicknameChange from './components/NicknameChange/NicknameChange';
 
 function MyPage() {
     const navigate = useNavigate();
@@ -16,7 +17,7 @@ function MyPage() {
     const [boards, setBoards] = useState<board[]>([]);
     const [comments, setComments] = useState<comment[]>([]);
     const [showModal, setShowModal] = useState<boolean>(false);
-    const [modalContent, setModalContent] = useState<string>('');
+    const [modalContent, setModalContent] = useState('');
     useEffect(() => {
         const loadBoards = async () => {
             try {
@@ -50,13 +51,13 @@ function MyPage() {
         navigate('/');
     };
     const handlePasswordChange = () => {
-        const html = `
-            <h1>비밀번호 변경</h1>
-        `;
-        setModalContent(html);
+        setModalContent('password');
         toggleModal();
     };
-    const handleNickNameChange = () => {};
+    const handleNickNameChange = () => {
+        setModalContent('nickname');
+        toggleModal();
+    };
     const toggleModal = () => {
         setShowModal(!showModal);
     };
@@ -113,7 +114,11 @@ function MyPage() {
             </div>
             {showModal && (
                 <Modal onClose={toggleModal}>
-                    <PasswordChange onClose={toggleModal} />
+                    {modalContent === 'password' ? (
+                        <PasswordChange onClose={toggleModal} />
+                    ) : (
+                        <NicknameChange onClose={toggleModal} />
+                    )}
                 </Modal>
             )}
         </div>

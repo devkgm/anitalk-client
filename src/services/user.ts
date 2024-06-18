@@ -40,6 +40,19 @@ export const changePassword = async (user: User, token) => {
         body: JSON.stringify(user),
     });
     if (!res.ok) throw new Error(res.statusText);
-    const result: User = await res.json();
+    const result = await res.json();
+    return result;
+};
+export const changeNickname = async (user: User, token) => {
+    const res = await fetch(import.meta.env.VITE_BASE_URL + `api/users`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${token.replace('"', '')}`,
+        },
+        body: JSON.stringify(user),
+    });
+    if (!res.ok) throw new Error(res.statusText);
+    const result = await res.json();
     return result;
 };
