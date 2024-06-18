@@ -1,7 +1,7 @@
 import styles from './SignUp.module.scss';
 import { CiUser, CiLock } from 'react-icons/ci';
 import { useState } from 'react';
-import { joinUser } from '@/services/user';
+import { checkEmail, joinUser } from '@/services/user';
 import { useNavigate } from 'react-router-dom';
 function SignUp() {
     const [email, setEmail] = useState('');
@@ -23,7 +23,29 @@ function SignUp() {
     };
     const handleSignUp = async (e) => {
         e.preventDefault();
-        const result = await joinUser({ nickname, email, password });
+        const user: User = { nickname, email, password };
+        if (password !== passwordCheck) {
+            alert('비밀번호가 일치하지 않습니다.');
+            return;
+        }
+        if (password.length < 8) {
+            alert('비밀번호는 8자 이상이어야 합니다.');
+            return;
+        }
+        if (nickname.length < 2) {
+            alert('닉네임은 2자 이상이어야 합니다.');
+            return;
+        }
+        try {
+            if (await checkEmail(user)) {
+                alert('이미 존재하는 이메일입니다.');
+                return;
+            }
+        } catch (e) {
+            console.error(e);
+            alert('이미 존재하는 이메일입니다.');
+        }
+        const result = await joinUser(user);
         // 회원가입 성공 로직
         if (result) {
             navigate('/login');

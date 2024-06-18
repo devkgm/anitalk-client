@@ -22,3 +22,10 @@ export const signInWithEmailAndPassword = async (user: User) => {
     if (res.status === 200) return result;
     else return false;
 };
+
+export const checkEmail = async (user: User) => {
+    const res = await fetch(import.meta.env.VITE_BASE_URL + `api/users/email/${user.email}`);
+    const result = await res.json();
+    if (!res.ok) throw new Error(res.statusText);
+    return result.exist;
+};
