@@ -29,3 +29,17 @@ export const checkEmail = async (user: User) => {
     if (!res.ok) throw new Error(res.statusText);
     return result.exist;
 };
+
+export const changePassword = async (user: User, token) => {
+    const res = await fetch(import.meta.env.VITE_BASE_URL + `api/users/password`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${token.replace('"', '')}`,
+        },
+        body: JSON.stringify(user),
+    });
+    if (!res.ok) throw new Error(res.statusText);
+    const result: User = await res.json();
+    return result;
+};

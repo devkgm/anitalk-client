@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import { getUserBoards } from '@/services/board';
 import Header from '@/components/Header/Header';
 import { getUserComments } from '@/services/comment';
+import Modal from '@/components/Modal/Modal';
+import PasswordChange from './components/PasswordChange/PasswordChange';
 
 function MyPage() {
     const navigate = useNavigate();
@@ -13,7 +15,8 @@ function MyPage() {
     const [user, setUser] = useRecoilState(userState);
     const [boards, setBoards] = useState<board[]>([]);
     const [comments, setComments] = useState<comment[]>([]);
-
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [modalContent, setModalContent] = useState<string>('');
     useEffect(() => {
         const loadBoards = async () => {
             try {
@@ -46,8 +49,17 @@ function MyPage() {
         setIsLoggedIn(false);
         navigate('/');
     };
-    const handlePasswordChange = () => {};
+    const handlePasswordChange = () => {
+        const html = `
+            <h1>비밀번호 변경</h1>
+        `;
+        setModalContent(html);
+        toggleModal();
+    };
     const handleNickNameChange = () => {};
+    const toggleModal = () => {
+        setShowModal(!showModal);
+    };
     return (
         <div className={styles.container}>
             <Header />
@@ -99,6 +111,11 @@ function MyPage() {
                     </button>
                 </div>
             </div>
+            {showModal && (
+                <Modal onClose={toggleModal}>
+                    <PasswordChange onClose={toggleModal} />
+                </Modal>
+            )}
         </div>
     );
 }
