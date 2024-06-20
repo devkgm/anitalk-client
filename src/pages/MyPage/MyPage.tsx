@@ -14,7 +14,7 @@ function MyPage() {
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
     const [user, setUser] = useRecoilState(userState);
-    const [boards, setBoards] = useState<board[]>([]);
+    const [boards, setBoards] = useState<MyBoardVO[]>([]);
     const [comments, setComments] = useState<comment[]>([]);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [modalContent, setModalContent] = useState('');
@@ -78,6 +78,7 @@ function MyPage() {
                                 key={board.id}
                                 onClick={() => navigate(`/animations/${board.animationId}/boards/${board.id}`)}
                             >
+                                <div className={styles.listItemTitle}>{board.animationName}</div>
                                 <div className={styles.listItemTitle}>{board.title}</div>
                                 <div className={styles.listItemDetail}>{board.hit} 조회</div>
                                 <div className={styles.listItemDetail}>{board.nickname}</div>
