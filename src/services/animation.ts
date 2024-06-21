@@ -4,7 +4,8 @@ export const getAnimations = async (page: number, size: number): Promise<animati
     });
     if (!res.ok) throw new Error(res.statusText);
     const result = await res.json();
-    const data: animation[] = result.content;
+    console.log(result);
+    const data: animation[] = result.data.content;
     return data;
 };
 

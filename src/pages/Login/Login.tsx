@@ -24,10 +24,10 @@ function Login() {
         // 로그인 성공 로직
         if (result) {
             setIsLoggedIn(true);
-            setUser(result.user);
+            setUser(result.data.user);
             console.log(result);
-            localStorage.setItem('user', JSON.stringify(result.user));
-            localStorage.setItem('token', JSON.stringify(result.token.token));
+            localStorage.setItem('user', JSON.stringify(result.data.user));
+            localStorage.setItem('token', JSON.stringify(result.data.token.token));
             navigate('/');
         }
     };

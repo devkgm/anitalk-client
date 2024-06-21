@@ -4,7 +4,7 @@ export const getComments = async (boardId: number): Promise<comment[]> => {
     });
     if (!res.ok) throw new Error(res.statusText);
     const result = await res.json();
-    const data: comment[] = result.content;
+    const data: comment[] = result.data.content;
     return data;
 };
 
@@ -14,6 +14,7 @@ export const getUserComments = async (userId: number): Promise<comment[]> => {
     });
     if (!res.ok) throw new Error(res.statusText);
     const result = await res.json();
-    const data: comment[] = result.content;
+    console.log(result);
+    const data: comment[] = result.data.content;
     return data;
 };

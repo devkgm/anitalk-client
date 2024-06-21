@@ -4,7 +4,7 @@ export const getBoards = async (animationId: number): Promise<board[]> => {
     });
     if (!res.ok) throw new Error(res.statusText);
     const result = await res.json();
-    const data: board[] = result.content;
+    const data: board[] = result.data.content;
     return data;
 };
 
@@ -24,6 +24,6 @@ export const getUserBoards = async (userId: number): Promise<board[]> => {
     });
     if (!res.ok) throw new Error(res.statusText);
     const result = await res.json();
-    const data: board[] = result.content;
+    const data: board[] = result.data.content;
     return data;
 };

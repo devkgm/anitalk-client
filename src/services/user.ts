@@ -19,6 +19,8 @@ export const signInWithEmailAndPassword = async (user: User) => {
         body: JSON.stringify(user),
     });
     const result = await res.json();
+    console.log(res);
+    console.log(result);
     if (res.status === 200) return result;
     else return false;
 };
