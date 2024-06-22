@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import Loading from '@/components/Loading/Loading';
 import Info from './components/Info/Info';
 import Board from './components/Board/Board';
+import Chatting from '@/components/Chatting/Chatting';
 function Animation() {
     const { animationId } = useParams();
     const [animation, setAnimation] = useState<Animation>(null);
@@ -29,8 +30,13 @@ function Animation() {
                 <div className={styles.info}>
                     <Info data={animation} />
                 </div>
-                <div className={styles.board}>
-                    <Board animationId={animation.id} />
+                <div className={styles.section}>
+                    <div className={styles.main}>
+                        <Board animationId={animation.id} />
+                    </div>
+                    <div className={styles.sub}>
+                        <Chatting roomId={animation.id} />
+                    </div>
                 </div>
             </div>
         </div>

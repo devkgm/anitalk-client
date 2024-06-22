@@ -14,5 +14,16 @@
         .info {
             width: 100%;
         }
+
+        .section {
+            display: flex;
+
+            width: 100%;
+
+            gap: 16px;
+            .main {
+                width: 80%;
+            }
+        }
     }
 }

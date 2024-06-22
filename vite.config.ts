@@ -5,6 +5,19 @@ import { fileURLToPath } from 'url';
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [react()],
+    server: {
+        proxy: {
+            '/ws': {
+                target: 'http://localhost:80',
+                // ws: true,
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/ws/, ''),
+            },
+        },
+    },
+    define: {
+        global: {},
+    },
     resolve: {
         alias: {
             '@': fileURLToPath(new URL('./src', import.meta.url)),

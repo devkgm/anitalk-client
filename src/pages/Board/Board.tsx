@@ -5,10 +5,10 @@ import { useParams } from 'react-router-dom';
 import { getBoard } from '@/api/BoardAPI';
 function Board() {
     const { animationId, boardId } = useParams();
-    const [board, setBoard] = useState<board>(null);
+    const [board, setBoard] = useState<Board>(null);
     useEffect(() => {
         const loadData = async () => {
-            const data = await getBoard(Number(animationId), boardId);
+            const data = await getBoard(animationId, boardId);
         };
         loadData();
     }, []);
