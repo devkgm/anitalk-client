@@ -10,10 +10,6 @@ function PasswordChange({ onClose }) {
     const user = useRecoilValue(userState);
 
     const handleChangePassword = async () => {
-        const token = await localStorage.getItem('token');
-        // console.log(currentPassword);
-        console.log(newPassword);
-        console.log(confirmPassword);
         if (newPassword !== confirmPassword) {
             alert('비밀번호가 일치하지 않습니다.');
             return;
@@ -25,7 +21,7 @@ function PasswordChange({ onClose }) {
             password: newPassword,
         };
         try {
-            await changePassword(newUser, token);
+            await changePassword(newUser);
             alert('비밀번호가 변경되었습니다.');
             onClose();
         } catch (err) {

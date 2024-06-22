@@ -12,7 +12,6 @@ function Login() {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const handleInputEmail = (e) => {
-        console.log(e.target.value);
         setEmail(e.target.value);
     };
     const handleInputPassword = (e) => {
@@ -20,15 +19,16 @@ function Login() {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const result = await signInWithEmailAndPassword({ email, password });
         // 로그인 성공 로직
-        if (result) {
+        try {
+            const data = await signInWithEmailAndPassword({ email, password });
             setIsLoggedIn(true);
-            setUser(result.data.user);
-            console.log(result);
-            localStorage.setItem('user', JSON.stringify(result.data.user));
-            localStorage.setItem('access_token', JSON.stringify(result.data.token.token));
+            setUser(data);
+            localStorage.setItem('user', JSON.stringify(data));
             navigate('/');
+        } catch (err) {
+            console.error(err);
+            alert('로그인에 실패했습니다.');
         }
     };
     const handleSignUp = () => {

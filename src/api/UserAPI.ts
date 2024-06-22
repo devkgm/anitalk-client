@@ -9,10 +9,10 @@ export const joinUser = async (user: User): Promise<User> => {
         throw new Error('회원가입 실패');
     }
 };
-export const signInWithEmailAndPassword = async (user: User) => {
+export const signInWithEmailAndPassword = async (user: User): Promise<User> => {
     try {
         const response = await apiClient.post(`login`, JSON.stringify(user));
-        const data: User = response.data;
+        const data: User = response.data.data.user;
         return data;
     } catch (err) {
         throw new Error('회원가입 실패');
@@ -33,29 +33,21 @@ export const checkEmail = async (user: User) => {
     return result.exist;
 };
 
-export const changePassword = async (user: User, token) => {
-    const res = await fetch(import.meta.env.VITE_BASE_URL + `api/users/password`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-            authorization: `Bearer ${token.replace('"', '')}`,
-        },
-        body: JSON.stringify(user),
-    });
-    if (!res.ok) throw new Error(res.statusText);
-    const result = await res.json();
-    return result;
+export const changePassword = async (user: User) => {
+    try {
+        await apiClient.put(`users/password`, user);
+    } catch (err) {
+        console.error(err);
+        throw new Error('비밀번호 변경 실패');
+    }
 };
 export const changeNickname = async (user: User, token) => {
-    const res = await fetch(import.meta.env.VITE_BASE_URL + `api/users`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-            authorization: `Bearer ${token.replace('"', '')}`,
-        },
-        body: JSON.stringify(user),
-    });
-    if (!res.ok) throw new Error(res.statusText);
-    const result = await res.json();
-    return result;
+    try {
+        const response = await apiClient.put(`users`, user);
+        const data = response.data.data;
+        return data;
+    } catch (err) {
+        console.error(err);
+        throw new Error('비밀번호 변경 실패');
+    }
 };
