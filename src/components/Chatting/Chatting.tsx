@@ -22,7 +22,6 @@ function Chatting({ roomId }: Prop) {
         const loadChatHistory = async () => {
             try {
                 const data = await getChattings(roomId);
-                console.log(data);
                 setChatHistory(data);
             } catch (e) {
                 console.error(e);
@@ -30,6 +29,12 @@ function Chatting({ roomId }: Prop) {
         };
         loadChatHistory();
         connection();
+
+        return () => {
+            if (stmpClient.current && stmpClient.current.connected) {
+                stmpClient.current.disconnect();
+            }
+        };
     }, []);
     useEffect(() => {
         if (chatListRef.current) {
@@ -39,6 +44,7 @@ function Chatting({ roomId }: Prop) {
 
     const connection = () => {
         stmpClient.current = Stomp.client('ws://' + import.meta.env.VITE_BASE_URL + '/ws');
+        stmpClient.current.debug = () => {};
         stmpClient.current.connect(
             {},
             //onConnect
