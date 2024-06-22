@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './Board.module.scss';
-import { getBoards } from '@/services/board';
+import { getBoards } from '@/api/BoardAPI';
 import { useNavigate } from 'react-router-dom';
 
 interface Board {
@@ -12,18 +12,17 @@ interface Board {
 }
 
 interface Prop {
-    animationId: number;
+    animationId: string;
 }
 
 function Board({ animationId }: Prop) {
     const navigate = useNavigate();
-    const [boards, setBoards] = useState<board[]>([]);
+    const [boards, setBoards] = useState<Board[]>([]);
 
     useEffect(() => {
         const loadBoards = async () => {
             try {
-                const data: board[] = await getBoards(animationId);
-                console.log(data);
+                const data: Board[] = await getBoards(animationId);
                 setBoards(data);
             } catch (e) {
                 console.error(e);

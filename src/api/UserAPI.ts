@@ -1,28 +1,29 @@
-export const joinUser = async (user: User) => {
-    const res = await fetch(import.meta.env.VITE_BASE_URL + 'api/users', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(user),
-    });
-    const result = await res.json();
-    if (res.status === 200) return result;
-    else return false;
+import { apiClient } from '@/util/apiClient';
+
+export const joinUser = async (user: User): Promise<User> => {
+    try {
+        const response = await apiClient.post(`users`, JSON.stringify(user));
+        const data: User = response.data;
+        return data;
+    } catch (err) {
+        throw new Error('회원가입 실패');
+    }
 };
 export const signInWithEmailAndPassword = async (user: User) => {
-    const res = await fetch(import.meta.env.VITE_BASE_URL + 'api/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(user),
-    });
-    const result = await res.json();
-    console.log(res);
-    console.log(result);
-    if (res.status === 200) return result;
-    else return false;
+    try {
+        const response = await apiClient.post(`login`, JSON.stringify(user));
+        const data: User = response.data;
+        return data;
+    } catch (err) {
+        throw new Error('회원가입 실패');
+    }
+};
+export const logout = async (user: User) => {
+    try {
+        const response = await apiClient.post(`logout`, JSON.stringify(user));
+    } catch (err) {
+        throw new Error('로그아웃 실패');
+    }
 };
 
 export const checkEmail = async (user: User) => {

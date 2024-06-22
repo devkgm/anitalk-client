@@ -1,4 +1,4 @@
-interface comment {
+interface Comment {
     id?: string;
     userId?: number;
     boardId?: number;

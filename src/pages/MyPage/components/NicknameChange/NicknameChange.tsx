@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styles from './NicknameChange.module.scss';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { userState } from '@/recoil/auth';
-import { changeNickname, changePassword } from '@/services/user';
+import { changeNickname, changePassword } from '@/api/UserAPI';
 function NicknameChange({ onClose }) {
     // const [currentPassword, setCurrentPassword] = useState('');
     const [nickname, setNickname] = useState('');

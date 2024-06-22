@@ -1,20 +1,19 @@
 import Header from '@/components/Header/Header';
 import styles from './Animation.module.scss';
 import { useEffect, useState } from 'react';
-import { getAnimation } from '@/services/animation';
+import { getAnimation } from '@/api/AnimationAPI';
 import { useParams } from 'react-router-dom';
 import Loading from '@/components/Loading/Loading';
 import Info from './components/Info/Info';
 import Board from './components/Board/Board';
 function Animation() {
     const { animationId } = useParams();
-    const [animation, setAnimation] = useState<animation>(null);
+    const [animation, setAnimation] = useState<Animation>(null);
     //애니메이션 데이터 가져오기
     useEffect(() => {
         const getData = async () => {
             try {
                 const data = await getAnimation(animationId);
-                console.log(data);
                 setAnimation(data);
             } catch (e) {
                 console.error(e);

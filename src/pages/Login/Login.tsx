@@ -1,7 +1,7 @@
 import styles from './Login.module.scss';
 import { CiUser, CiLock } from 'react-icons/ci';
 import { useState } from 'react';
-import { signInWithEmailAndPassword } from '@/services/user';
+import { signInWithEmailAndPassword } from '@/api/UserAPI';
 import { useRecoilState } from 'recoil';
 import { isLoggedInState, userState } from '@/recoil/auth';
 import { useNavigate } from 'react-router-dom';
@@ -27,7 +27,7 @@ function Login() {
             setUser(result.data.user);
             console.log(result);
             localStorage.setItem('user', JSON.stringify(result.data.user));
-            localStorage.setItem('token', JSON.stringify(result.data.token.token));
+            localStorage.setItem('access_token', JSON.stringify(result.data.token.token));
             navigate('/');
         }
     };

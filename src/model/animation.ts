@@ -1,5 +1,5 @@
-interface animation {
-    id?: number;
+interface Animation {
+    id?: string;
     name?: string;
     plot?: string;
     condition?: string;

@@ -1,4 +1,4 @@
-interface board {
+interface Board {
     id?: string;
     animationId?: string;
     title?: string;

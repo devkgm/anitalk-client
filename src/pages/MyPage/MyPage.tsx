@@ -3,26 +3,26 @@ import styles from './MyPage.module.scss';
 import { isLoggedInState, userState } from '@/recoil/auth';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getUserBoards } from '@/services/board';
+import { getUserBoards } from '@/api/BoardAPI';
 import Header from '@/components/Header/Header';
-import { getUserComments } from '@/services/comment';
+import { getUserComments } from '@/api/CommentAPI';
 import Modal from '@/components/Modal/Modal';
 import PasswordChange from './components/PasswordChange/PasswordChange';
 import NicknameChange from './components/NicknameChange/NicknameChange';
+import { logout } from '@/api/UserAPI';
 
 function MyPage() {
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
     const [user, setUser] = useRecoilState(userState);
     const [boards, setBoards] = useState<MyBoardVO[]>([]);
-    const [comments, setComments] = useState<comment[]>([]);
+    const [comments, setComments] = useState<Comment[]>([]);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [modalContent, setModalContent] = useState('');
     useEffect(() => {
         const loadBoards = async () => {
             try {
                 const data = await getUserBoards(user.id);
-                console.log(data);
                 setBoards(data);
             } catch (e) {
                 console.error(e);
@@ -31,7 +31,6 @@ function MyPage() {
         const loadComments = async () => {
             try {
                 const data = await getUserComments(user.id);
-                console.log(data);
                 setComments(data);
             } catch (e) {
                 console.error(e);
@@ -43,12 +42,17 @@ function MyPage() {
         }
     }, [user]);
 
-    const handleLogOut = () => {
-        localStorage.removeItem('user');
-        localStorage.removeItem('token');
-        setUser({ id: null, email: '', nickname: '' });
-        setIsLoggedIn(false);
-        navigate('/');
+    const handleLogOut = async () => {
+        try {
+            await logout(user);
+            localStorage.removeItem('user');
+            localStorage.removeItem('access_token');
+            setUser({ id: null, email: '', nickname: '' });
+            setIsLoggedIn(false);
+            navigate('/');
+        } catch (e) {
+            console.error(e);
+        }
     };
     const handlePasswordChange = () => {
         setModalContent('password');

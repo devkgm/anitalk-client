@@ -1,7 +1,7 @@
 import styles from './SignUp.module.scss';
 import { CiUser, CiLock } from 'react-icons/ci';
 import { useState } from 'react';
-import { checkEmail, joinUser } from '@/services/user';
+import { checkEmail, joinUser } from '@/api/UserAPI';
 import { useNavigate } from 'react-router-dom';
 function SignUp() {
     const [email, setEmail] = useState('');

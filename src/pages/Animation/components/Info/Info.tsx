@@ -1,10 +1,9 @@
 import styles from './Info.module.scss';
 
 interface Prop {
-    data: animation;
+    data: Animation;
 }
 function Info({ data }: Prop) {
-    console.log(data);
     return (
         <div className={styles.container}>
             <div className={styles.box}>

@@ -28,7 +28,7 @@
             "@pages/*": ["src/pages/*"],
             "@types/*": ["src/types/*"],
             "@recoil/*": ["src/recoil/*"],
-            "@services/*": ["src/services/*"]
+            "@services/*": ["src/api/*"]
         },
         "noImplicitAny": false,
         "strictNullChecks": false

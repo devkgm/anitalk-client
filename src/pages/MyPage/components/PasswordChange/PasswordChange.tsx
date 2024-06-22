@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styles from './PasswordChange.module.scss';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@/recoil/auth';
-import { changePassword } from '@/services/user';
+import { changePassword } from '@/api/UserAPI';
 function PasswordChange({ onClose }) {
     // const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');

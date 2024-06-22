@@ -2,7 +2,7 @@ import Header from '@/components/Header/Header';
 import styles from './Home.module.scss';
 import Popular from './components/Popular/Popular';
 import { useEffect, useState } from 'react';
-import { getAnimations } from '@/services/animation';
+import { getAnimations } from '@/api/AnimationAPI';
 import AnimationCard from './components/AnimationCard/AnimationCard';
 import Footer from '@/components/Footer/Footer';
 import Loading from '@/components/Loading/Loading';
@@ -26,7 +26,6 @@ function Home() {
     const cards = animations.map((ani) => {
         return <AnimationCard data={ani} key={ani.name + ani.id} />;
     });
-    console.log(cards);
     return (
         <div className={styles.container}>
             <Header />

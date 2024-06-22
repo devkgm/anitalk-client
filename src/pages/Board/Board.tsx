@@ -2,7 +2,7 @@ import Header from '@/components/Header/Header';
 import styles from './Board.module.scss';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getBoard } from '@/services/board';
+import { getBoard } from '@/api/BoardAPI';
 function Board() {
     const { animationId, boardId } = useParams();
     const [board, setBoard] = useState<board>(null);
