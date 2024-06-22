@@ -23,7 +23,6 @@ function Login() {
         try {
             const data = await signInWithEmailAndPassword({ email, password });
             setIsLoggedIn(true);
-            console.log(data);
             setUser(data);
             localStorage.setItem('user', JSON.stringify(data));
             navigate('/');

@@ -17,7 +17,6 @@ function NicknameChange({ onClose }) {
         };
         try {
             const result = await changeNickname(newUser, token);
-            console.log(result);
             setUser(result);
             localStorage.setItem('user', JSON.stringify(result));
             alert('닉네임이 변경되었습니다.');

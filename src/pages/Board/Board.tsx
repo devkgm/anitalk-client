@@ -9,7 +9,6 @@ function Board() {
     useEffect(() => {
         const loadData = async () => {
             const data = await getBoard(Number(animationId), boardId);
-            console.log(data);
         };
         loadData();
     }, []);

@@ -26,11 +26,12 @@ apiClient.interceptors.response.use(
     (response) => {
         const serverResponse = response.data;
         if (serverResponse.accessToken != null) {
-            localStorage.setItem('access_token', serverResponse.accessToken);
+            localStorage.setItem('access_token', JSON.stringify(serverResponse.accessToken));
         }
         return response;
     },
     (error) => {
+        console.error(error);
         return Promise.reject(error);
     }
 );
