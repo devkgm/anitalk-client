@@ -3,6 +3,7 @@ import { apiClient } from '@/util/apiClient';
 export const getAnimations = async (page: number, size: number): Promise<Animation[]> => {
     try {
         const response = await apiClient.get(`/animations?page=${page}&size=${size}`);
+        console.log(response);
         const data: Animation[] = response.data.data.content;
         return data;
     } catch (error) {

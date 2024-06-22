@@ -45,10 +45,13 @@ function SignUp() {
             console.error(e);
             alert('이미 존재하는 이메일입니다.');
         }
-        const result = await joinUser(user);
-        // 회원가입 성공 로직
-        if (result) {
+        try {
+            await joinUser(user);
+            alert('회원가입에 성공했습니다.');
             navigate('/login');
+        } catch {
+            console.error(e);
+            alert('회원가입에 실패했습니다.');
         }
     };
 

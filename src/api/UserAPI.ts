@@ -27,10 +27,14 @@ export const logout = async (user: User) => {
 };
 
 export const checkEmail = async (user: User) => {
-    const res = await fetch(import.meta.env.VITE_BASE_URL + `api/users/email/${user.email}`);
-    const result = await res.json();
-    if (!res.ok) throw new Error(res.statusText);
-    return result.exist;
+    try {
+        const response = await apiClient.get(`users/email/${user.email}`);
+        const data = response.data.data.exist;
+        return data;
+    } catch (err) {
+        console.error(err);
+        throw new Error('이메일 조회 실패');
+    }
 };
 
 export const changePassword = async (user: User) => {
