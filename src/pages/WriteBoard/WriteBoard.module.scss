@@ -1,0 +1,54 @@
+.container {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+
+    .section {
+        width: 1000px;
+        height: calc(100vh - $headerHeight - $footerHeight);
+
+        margin: 0 auto;
+        padding: 20px 0;
+
+        .head {
+            display: flex;
+
+            gap: 10px;
+
+            margin-bottom: 10px;
+            .title {
+                flex: 4;
+            }
+            .nickname {
+                flex: 1;
+            }
+            .password {
+                flex: 1;
+            }
+        }
+        .submit {
+            margin: 10px 0;
+            &__button {
+                margin-left: auto;
+
+                background-color: $mainColor;
+                color: #fff;
+                padding: 10px 20px;
+                font-size: 1rem;
+                border: none;
+                border-radius: $border-radius;
+                cursor: pointer;
+                transition: background-color 0.3s;
+
+                &:hover {
+                    background-color: $button-hover-color;
+                }
+
+                &:active {
+                    background-color: $button-active-color;
+                }
+            }
+        }
+    }
+}

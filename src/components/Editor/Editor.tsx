@@ -1,17 +1,14 @@
-import styles from './Editor.module.scss';
+import './Editor.scss';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { uploadFile } from '@/api/FileAPI';
 interface Props {
-    uploadUrl?: string;
+    uploadUrl: string;
+    handleChange: Dispatch<SetStateAction<string>>;
+    handleAttach(id: string): void;
 }
-function Editor({ uploadUrl }: Props) {
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-    const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.target.value);
-    };
+function Editor({ uploadUrl, handleChange, handleAttach }: Props) {
     function uploadPlugin(editor) {
         editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
             return customUploadAdapter(loader);
@@ -23,12 +20,10 @@ function Editor({ uploadUrl }: Props) {
                 return new Promise((resolve, reject) => {
                     const formData = new FormData();
                     loader.file.then((file) => {
-                        console.log(file);
                         formData.append('attach', file);
-                        console.log(formData.get('attach'));
-                        console.log(formData);
                         uploadFile('boards', formData)
                             .then((data) => {
+                                handleAttach(data.id);
                                 resolve({ default: data.url });
                             })
                             .catch((e) => {
@@ -41,31 +36,20 @@ function Editor({ uploadUrl }: Props) {
     };
 
     return (
-        <div className={styles.container}>
-            <div className={styles.title}>
-                <input type="text" placeholder="제목을 입력하세요." value={title} onChange={handleChangeTitle} />
-            </div>
-            <div className={styles.editorContainer}>
-                <CKEditor
-                    editor={ClassicEditor}
-                    data=""
-                    config={{ extraPlugins: [uploadPlugin] }}
-                    onReady={(editor) => {
-                        console.log('Editor is ready to use!', editor);
-                    }}
-                    onChange={(event, editor) => {
-                        setContent(editor.getData());
-                        // console.log({ event, editor, content });
-                    }}
-                    onBlur={(event, editor) => {
-                        // console.log('Blur.', editor);
-                    }}
-                    onFocus={(event, editor) => {
-                        // console.log('Focus.', editor);
-                    }}
-                />
-            </div>
-        </div>
+        <CKEditor
+            editor={ClassicEditor}
+            data=""
+            config={{
+                extraPlugins: [uploadPlugin],
+                placeholder: '내용을 입력하세요.',
+            }}
+            onReady={(editor) => {}}
+            onChange={(event, editor) => {
+                handleChange(editor.getData());
+            }}
+            onBlur={(event, editor) => {}}
+            onFocus={(event, editor) => {}}
+        />
     );
 }
 

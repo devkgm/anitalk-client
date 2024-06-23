@@ -9,7 +9,7 @@
 
         width: 100%;
         max-width: 1000px;
-        height: 100vh;
+        min-height: calc(100vh - $headerHeight - $footerHeight);
 
         .info {
             width: 100%;

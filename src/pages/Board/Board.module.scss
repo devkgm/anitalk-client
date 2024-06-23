@@ -1,0 +1,176 @@
+$padding: 15px;
+$margin: 10px 0;
+.container {
+    width: 100%;
+
+    .article {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        width: 100%;
+        max-width: 1000px;
+        min-height: calc(100vh - $headerHeight - $footerHeight);
+
+        padding: 20px;
+        margin: 0 auto;
+        margin-top: 20px;
+
+        .section {
+            width: 100%;
+
+            background-color: white;
+            @include shadow;
+            border-radius: $border-radius;
+            .head {
+                display: flex;
+
+                width: 100%;
+
+                padding: 10px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+
+                .title {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: start;
+                    flex: 1;
+
+                    &__sub {
+                        font-size: 14px;
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+                    &__text {
+                        flex: 1;
+                        font-size: 24px;
+                        font-weight: 800;
+                    }
+                }
+
+                .info {
+                    text-align: end;
+                    color: gray;
+                    font-size: 14px;
+                    font-weight: 300;
+                }
+            }
+            .content {
+                padding: 20px;
+
+                height: fit-content;
+
+                .like {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    padding: 20px;
+
+                    &__text {
+                        width: 50px;
+                        height: 50px;
+
+                        border-radius: 100%;
+
+                        background-color: $mainColor;
+                        color: white;
+                        font-size: 18px;
+                        font-weight: 800;
+                        text-align: center;
+                        line-height: 50px;
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+                    &__count {
+                        padding: 20px;
+                        font-size: 18px;
+                        font-weight: 800;
+                        &::before {
+                            content: '👍';
+                        }
+                    }
+                }
+            }
+        }
+
+        .commentSection {
+            width: 100%;
+
+            margin: $margin;
+            padding: $padding;
+            background-color: $background-color;
+            border-radius: $border-radius;
+            box-shadow: $box-shadow;
+
+            .title {
+                font-size: 1.5rem;
+                font-weight: bold;
+                margin-bottom: 20px;
+                color: $text-color;
+
+                &__text {
+                    display: inline-block;
+                }
+            }
+
+            .comments {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+
+                .commets_item {
+                    display: flex;
+                    flex-direction: row;
+                    padding: $padding;
+                    border-bottom: 1px solid #eee;
+                    margin-bottom: $margin;
+
+                    &:last-child {
+                        border-bottom: none;
+                    }
+
+                    .nickname {
+                        font-size: 1rem;
+                        font-weight: bold;
+                        color: $primary-color;
+                        margin-bottom: 5px;
+                    }
+
+                    .content {
+                        flex: 1;
+                        font-size: 1rem;
+                        color: $text-color;
+                        margin-bottom: 10px;
+                    }
+
+                    .date {
+                        font-size: 0.875rem;
+                        color: $text-color;
+                        margin-bottom: 10px;
+                    }
+
+                    .delete,
+                    .edit,
+                    .reply {
+                        font-size: 0.875rem;
+                        color: $secondary-color;
+                        cursor: pointer;
+                        margin-right: 10px;
+                        transition: color 0.3s;
+
+                        &:hover {
+                            color: darken($secondary-color, 10%);
+                        }
+
+                        &:last-child {
+                            margin-right: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

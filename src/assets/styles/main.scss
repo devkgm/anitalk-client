@@ -5,6 +5,14 @@ $headerHeight: 50px;
 $footerHeight: 50px;
 $backgroundColor: #eff0f2;
 $mainColor: #05c474;
+$primary-color: #3498db;
+$secondary-color: #2ecc71;
+$background-color: white;
+$text-color: #333;
+$button-hover-color: darken($primary-color, 10%);
+$button-active-color: lighten($primary-color, 10%);
+$border-radius: 8px;
+$box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 * {
     padding: 0;
     margin: 0;

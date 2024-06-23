@@ -9,6 +9,7 @@ import { isLoggedInState, userState } from './recoil/auth';
 import SignUp from './pages/SignUp/SignUp';
 import Animation from './pages/Animation/Animation';
 import WriteAnimation from './pages/WriteAnimation/WriteAnimation';
+import WriteBoard from './pages/WriteBoard/WriteBoard';
 
 function App() {
     const [user, setUser] = useRecoilState(userState);
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/animations/:animationId" element={<Animation />} />
+                <Route path="/animations/:animationId/write" element={<WriteBoard />} />
                 <Route path="/animations/:animationId/boards/:boardId" element={<Board />} />
                 <Route path="/animations/write" element={<WriteAnimation />} />
             </Routes>

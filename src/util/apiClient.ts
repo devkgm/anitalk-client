@@ -3,9 +3,9 @@ import axios from 'axios';
 export const apiClient = axios.create({
     baseURL: 'http://' + import.meta.env.VITE_BASE_URL + '/api/',
     timeout: 1000,
-    // headers: {
-    //     'Content-Type': 'application/json',
-    // },
+    headers: {
+        'Content-Type': 'application/json',
+    },
     withCredentials: true,
 });
 

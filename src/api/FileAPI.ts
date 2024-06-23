@@ -2,10 +2,10 @@ import { apiClient } from '@/util/apiClient';
 
 export const uploadFile = async (category: string, form: FormData) => {
     try {
-        console.log(form);
-        const response = await apiClient.post(`attaches/${category}`, form);
-        console.log(response);
-        return response.data;
+        const response = await apiClient.post(`attaches/${category}`, form, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        return response.data.data;
     } catch (err) {
         console.error(err);
         throw new Error('파일 업로드 실패');

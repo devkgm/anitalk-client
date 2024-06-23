@@ -31,7 +31,7 @@ function MyPage() {
         const loadComments = async () => {
             try {
                 const data = await getUserComments(user.id);
-                setComments(data);
+                setComments(data.content);
             } catch (e) {
                 console.error(e);
             }
@@ -97,12 +97,14 @@ function MyPage() {
                         {comments.map((comment) => (
                             <li
                                 className={styles.listItem}
-                                key={comment.id}
-                                onClick={() => navigate(`/boards/${comment.boardId}`)}
+                                key={comment.id + comment.date}
+                                onClick={() => navigate(`/animations/${comment.animationId}/boards/${comment.boardId}`)}
                             >
+                                <div className={styles.listItemDetail}>{comment.animationName}</div>
+                                <div className={styles.listItemDetail}>{comment.boardTitle}</div>
                                 <div className={styles.listItemDetail}>{comment.nickname}</div>
                                 <div className={styles.listItemContent}>{comment.content}</div>
-                                <div className={styles.listItemDetail}>{comment.writeDate}</div>
+                                <div className={styles.listItemDetail}>{comment.date}</div>
                             </li>
                         ))}
                     </ul>
