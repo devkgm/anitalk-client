@@ -4,23 +4,30 @@
     align-items: center;
 
     flex-direction: column;
-
-    .article {
+    .section {
         display: flex;
-        flex-direction: column;
 
-        gap: 24px;
-        width: 80%;
+        gap: 10px;
+        max-width: 1000px;
 
-        padding: 30px 0;
-
-        &__cards {
+        padding-top: 30px;
+        .article {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
+            flex-direction: column;
 
-            gap: 16px;
+            flex: 1;
+            gap: 24px;
+
+            &__cards {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+
+                gap: 16px;
+            }
+        }
+        .aside {
         }
     }
 }

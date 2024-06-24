@@ -68,6 +68,7 @@ export const unLikeBoard = async (animationId: string, boardId: string) => {
 export const getHotBoard = async (page: number, size: number) => {
     try {
         const response = await apiClient.get(`boards?page=${page}&size=${size}`);
+        console.log(response);
         const data: WithPageResponse<Board> = response.data.data;
         return data;
     } catch (err) {

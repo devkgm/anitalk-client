@@ -6,6 +6,7 @@ import { getAnimations } from '@/api/AnimationAPI';
 import AnimationCard from './components/AnimationCard/AnimationCard';
 import Footer from '@/components/Footer/Footer';
 import Loading from '@/components/Loading/Loading';
+import HotBoard from './components/HotBoard/HotBoard';
 
 function Home() {
     const [animations, setAnimations] = useState([]);
@@ -29,9 +30,17 @@ function Home() {
     return (
         <div className={styles.container}>
             <Header />
-            <section className={styles.article}>
-                <div className={styles.article__cards}>{cards.length != 0 ? cards : <Loading />}</div>
-            </section>
+            <div className={styles.section}>
+                <div className={styles.article}>
+                    <div className={styles.article__cards}>{cards.length != 0 ? cards : <Loading />}</div>
+                </div>
+                <div className={styles.aside}>
+                    <div className={styles.hotBoard}>
+                        <HotBoard />
+                    </div>
+                </div>
+            </div>
+
             <Footer />
         </div>
     );
