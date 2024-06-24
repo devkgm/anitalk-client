@@ -7,6 +7,7 @@ import AnimationCard from './components/AnimationCard/AnimationCard';
 import Footer from '@/components/Footer/Footer';
 import Loading from '@/components/Loading/Loading';
 import HotBoard from './components/HotBoard/HotBoard';
+import HotAnimation from './HotAnimation/HotAnimation';
 
 function Home() {
     const [animations, setAnimations] = useState([]);
@@ -35,6 +36,9 @@ function Home() {
                     <div className={styles.article__cards}>{cards.length != 0 ? cards : <Loading />}</div>
                 </div>
                 <div className={styles.aside}>
+                    <div className={styles.hotBoard}>
+                        <HotAnimation />
+                    </div>
                     <div className={styles.hotBoard}>
                         <HotBoard />
                     </div>

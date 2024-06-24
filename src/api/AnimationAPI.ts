@@ -23,7 +23,7 @@ export const getAnimation = async (id: string): Promise<Animation> => {
 
 export const getHotAnimation = async (page: number, size: number): Promise<WithPageResponse<Animation>> => {
     try {
-        const response = await apiClient.get(`animations/ranking`);
+        const response = await apiClient.get(`animations/ranking?page=${page}&size=${size}&rankBy=HOT`);
         const data: WithPageResponse<Animation> = response.data.data;
         return data;
     } catch (error) {
