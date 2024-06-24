@@ -64,3 +64,14 @@ export const unLikeBoard = async (animationId: string, boardId: string) => {
         throw new Error('게시글 좋아요 실패');
     }
 };
+
+export const getHotBoard = async (page: number, size: number) => {
+    try {
+        const response = await apiClient.get(`boards?page=${page}&size=${size}`);
+        const data: WithPageResponse<Board> = response.data.data;
+        return data;
+    } catch (err) {
+        console.error(err);
+        throw new Error('인기 게시글 가져오기 실패');
+    }
+};
