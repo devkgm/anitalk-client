@@ -1,40 +1,44 @@
-import { useEffect, useState } from 'react';
+import { ReducerStateWithoutAction, ReducerWithoutAction, useEffect, useMemo, useReducer, useState } from 'react';
 import styles from './Board.module.scss';
 import { getBoards } from '@/api/BoardAPI';
 import { useNavigate } from 'react-router-dom';
+import Pagination from '@/components/Pagination/Pagination';
 
 interface Board {
     id: number;
     title: string;
     hit: number;
     nickname: string;
-    write_date: string;
+    writeDate: string;
 }
 
 interface Prop {
     animationId: string;
 }
-
+const PER_PAGE = 10;
 function Board({ animationId }: Prop) {
     const navigate = useNavigate();
     const [boards, setBoards] = useState<Board[]>([]);
+    const [page, setPage] = useState(null);
+    const [currentPage, setCurrentPage] = useState(0);
 
     useEffect(() => {
-        const loadBoards = async () => {
-            try {
-                const data: Board[] = await getBoards(animationId);
-                setBoards(data);
-            } catch (e) {
-                console.error(e);
-            }
-        };
         loadBoards();
-    }, [animationId]);
-
+    }, [currentPage]);
+    const loadBoards = async () => {
+        try {
+            const data: WithPageResponse<Board> = await getBoards(animationId, currentPage, PER_PAGE);
+            setPage(data.page);
+            console.log(data.page);
+            setBoards(data.content);
+        } catch (e) {
+            console.error(e);
+        }
+    };
     const handleClickBoard = (boardId) => {
         navigate(`/animations/${animationId}/boards/${boardId}`);
     };
-    console.log(boards);
+
     return (
         <div className={styles.container}>
             <div className={styles.boards}>
@@ -71,6 +75,11 @@ function Board({ animationId }: Prop) {
                         </div>
                     )}
                 </ul>
+                {page && (
+                    <div className={styles.pagination}>
+                        <Pagination page={page} perBlock={2} onPageChange={setCurrentPage} />
+                    </div>
+                )}
             </div>
         </div>
     );

@@ -1,9 +1,13 @@
 import { apiClient } from '@/util/apiClient';
 
-export const getBoards = async (animationId: string): Promise<Board[]> => {
+export const getBoards = async (
+    animationId: string,
+    page: number = 0,
+    size: number = 10
+): Promise<WithPageResponse<Board>> => {
     try {
-        const response = await apiClient.get(`animations/${animationId}/boards`);
-        const data: Board[] = response.data.data.content;
+        const response = await apiClient.get(`animations/${animationId}/boards?page=${page}&size=${size}`);
+        const data: WithPageResponse<Board> = response.data.data;
         return data;
     } catch (err) {
         console.error(err);
