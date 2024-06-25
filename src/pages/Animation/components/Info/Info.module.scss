@@ -6,7 +6,7 @@
 
     .box {
         @include flex($axis: flex-start);
-
+        align-items: start;
         width: 100%;
 
         padding: 10px;
@@ -23,6 +23,7 @@
         }
         .info {
             @include flex($dir: column);
+            flex: 1;
             align-items: start;
 
             padding: 0 12px;
@@ -45,6 +46,15 @@
                     }
                 }
             }
+        }
+
+        .favorite {
+            &:hover {
+                cursor: pointer;
+            }
+        }
+        .favorite.liked {
+            color: red;
         }
     }
     .plot {

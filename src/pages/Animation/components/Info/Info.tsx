@@ -1,9 +1,22 @@
+import { useRecoilValue } from 'recoil';
 import styles from './Info.module.scss';
+import { userState } from '@/recoil/auth';
+import { likeAnimation } from '@/api/AnimationAPI';
+import { useRef } from 'react';
 
 interface Prop {
     data: Animation;
 }
 function Info({ data }: Prop) {
+    const favorite = useRef();
+    const handleLike = async () => {
+        try {
+            await likeAnimation(data.id);
+            favorite.current.style.color = 'red';
+        } catch (e) {
+            console.error(e);
+        }
+    };
     return (
         <div className={styles.container}>
             <div className={styles.box}>
@@ -38,6 +51,10 @@ function Info({ data }: Prop) {
                             <span>{data.onDate}</span>
                         </div>
                     </div>
+                </div>
+
+                <div className={styles.favorite} onClick={handleLike} ref={favorite}>
+                    <span className="material-symbols-outlined">favorite</span>
                 </div>
             </div>
 

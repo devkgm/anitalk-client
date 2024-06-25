@@ -31,3 +31,25 @@ export const getHotAnimation = async (page: number, size: number): Promise<WithP
         throw new Error('인기 애니메이션 가져오기 실패');
     }
 };
+
+export const likeAnimation = async (animationId: string) => {
+    try {
+        const response = await apiClient.post(`animations/${animationId}/favorite`);
+        console.log(response);
+        return response.data.data;
+    } catch (err) {
+        console.error(err);
+        throw new Error('애니 좋아요 실패');
+    }
+};
+
+export const unLikeAnimation = async (animationId: string) => {
+    try {
+        const response = await apiClient.delete(`animations/${animationId}/favorite`);
+        console.log(response);
+        return response.data.data;
+    } catch (err) {
+        console.error(err);
+        throw new Error('애니 좋아요 실패');
+    }
+};

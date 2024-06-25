@@ -8,6 +8,7 @@ export const getBoards = async (
 ): Promise<WithPageResponse<Board>> => {
     try {
         const response = await apiClient.get(`animations/${animationId}/boards?page=${page}&size=${size}&type=${type}`);
+        console.log(response);
         const data: WithPageResponse<Board> = response.data.data;
         return data;
     } catch (err) {
