@@ -15,19 +15,21 @@ interface Board {
 interface Prop {
     animationId: string;
 }
+
 const PER_PAGE = 10;
 function Board({ animationId }: Prop) {
     const navigate = useNavigate();
     const [boards, setBoards] = useState<Board[]>([]);
     const [page, setPage] = useState(null);
     const [currentPage, setCurrentPage] = useState(0);
+    const [type, setType] = useState<'ALL' | 'RECOMMENDED'>('ALL');
 
     useEffect(() => {
         loadBoards();
-    }, [currentPage]);
+    }, [currentPage, type]);
     const loadBoards = async () => {
         try {
-            const data: WithPageResponse<Board> = await getBoards(animationId, currentPage, PER_PAGE);
+            const data: WithPageResponse<Board> = await getBoards(animationId, currentPage, PER_PAGE, type);
             setPage(data.page);
             console.log(data.page);
             setBoards(data.content);
@@ -43,7 +45,15 @@ function Board({ animationId }: Prop) {
         <div className={styles.container}>
             <div className={styles.boards}>
                 <div className={styles.boards__nav}>
-                    <div className={styles.boards__nav__text}>게시판</div>
+                    <div className={styles.boards__nav__list}>
+                        <div className={styles.boards__nav__list__text} onClick={() => setType('ALL')}>
+                            게시판
+                        </div>
+                        <div className={styles.boards__nav__list__subtext} onClick={() => setType('RECOMMENDED')}>
+                            개념글
+                        </div>
+                    </div>
+
                     <div className={styles.boards__nav__button}>
                         <button
                             className={styles.boards__nav__button__create}

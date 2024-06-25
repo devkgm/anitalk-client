@@ -64,15 +64,30 @@
 .boards {
     &__nav {
         display: flex;
-        justify-content: space-between;
         align-items: center;
         padding: 10px 0;
         border-bottom: 2px solid $primary-color;
-
-        &__text {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: $text-color;
+        &__list {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 10px;
+            &__text {
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: $text-color;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+            &__subtext {
+                font-size: 1rem;
+                font-weight: bold;
+                color: $text-color;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
         }
 
         &__button {

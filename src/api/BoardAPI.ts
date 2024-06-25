@@ -3,10 +3,11 @@ import { apiClient } from '@/util/apiClient';
 export const getBoards = async (
     animationId: string,
     page: number = 0,
-    size: number = 10
+    size: number = 10,
+    type: 'RECOMMENDED' | 'ALL' = 'ALL'
 ): Promise<WithPageResponse<Board>> => {
     try {
-        const response = await apiClient.get(`animations/${animationId}/boards?page=${page}&size=${size}`);
+        const response = await apiClient.get(`animations/${animationId}/boards?page=${page}&size=${size}&type=${type}`);
         const data: WithPageResponse<Board> = response.data.data;
         return data;
     } catch (err) {
