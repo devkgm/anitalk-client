@@ -2,7 +2,7 @@ import { atom } from 'recoil';
 
 export const animationState = atom({
     key: 'animationState',
-    default: [],
+    default: null,
 });
 
 export const hotAnimationState = atom({

@@ -29,7 +29,7 @@ function HotBoard() {
                     boards.map((board, index) => (
                         <li
                             className={styles.hotItem}
-                            key={board.id + index}
+                            key={board.id + '' + index + board.title}
                             onClick={() => navigate(`/animations/${board.animationId}/boards/${board.id}`)}
                         >
                             <div className={styles.hotItem__title}>

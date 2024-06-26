@@ -1,9 +1,9 @@
 import { apiClient } from '@/util/apiClient';
 
-export const getAnimations = async (page: number, size: number): Promise<AnimationResponse[]> => {
+export const getAnimations = async (page: number, size: number): Promise<AnimationResponse> => {
     try {
         const response = await apiClient.get(`/animations?page=${page}&size=${size}`);
-        const data: AnimationResponse[] = response.data.data.content;
+        const data: AnimationResponse = response.data.data.content;
         return data;
     } catch (error) {
         throw new Error('애니메이션 리스트 가져오기 에러');
