@@ -10,12 +10,13 @@ import Chatting from '@/components/Chatting/Chatting';
 import Footer from '@/components/Footer/Footer';
 function Animation() {
     const { animationId } = useParams();
-    const [animation, setAnimation] = useState<Animation>(null);
+    const [animation, setAnimation] = useState<AnimationResponse>(null);
     //애니메이션 데이터 가져오기
     useEffect(() => {
         const getData = async () => {
             try {
                 const data = await getAnimation(animationId);
+                console.log(data);
                 setAnimation(data);
             } catch (e) {
                 console.error(e);

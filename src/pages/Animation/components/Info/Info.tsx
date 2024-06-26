@@ -1,18 +1,26 @@
 import { useRecoilValue } from 'recoil';
 import styles from './Info.module.scss';
 import { userState } from '@/recoil/auth';
-import { likeAnimation } from '@/api/AnimationAPI';
-import { useRef } from 'react';
+import { likeAnimation, unLikeAnimation } from '@/api/AnimationAPI';
+import { useEffect, useRef, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 
 interface Prop {
-    data: Animation;
+    data: AnimationResponse;
 }
 function Info({ data }: Prop) {
-    const favorite = useRef();
+    const [favorite, setFavorite] = useState(data.favorite);
     const handleLike = async () => {
         try {
-            await likeAnimation(data.id);
-            favorite.current.style.color = 'red';
+            if (favorite.isFavorite) {
+                await unLikeAnimation(data.id);
+                setFavorite({ ...favorite, isFavorite: false });
+                toast('좋아요를 취소했습니다😢');
+            } else {
+                await likeAnimation(data.id);
+                setFavorite({ ...favorite, isFavorite: true });
+                toast('북마크에 저장🥰');
+            }
         } catch (e) {
             console.error(e);
         }
@@ -53,7 +61,7 @@ function Info({ data }: Prop) {
                     </div>
                 </div>
 
-                <div className={styles.favorite} onClick={handleLike} ref={favorite}>
+                <div className={`${styles.favorite} ${favorite.isFavorite && styles.liked}`} onClick={handleLike}>
                     <span className="material-symbols-outlined">favorite</span>
                 </div>
             </div>
@@ -61,6 +69,10 @@ function Info({ data }: Prop) {
             <div className={styles.plot}>
                 <div className={styles.title}>줄거리</div>
                 <div className={styles.content}>{data.plot}</div>
+            </div>
+
+            <div>
+                <Toaster />
             </div>
         </div>
     );
