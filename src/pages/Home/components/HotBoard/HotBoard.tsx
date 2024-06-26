@@ -2,19 +2,20 @@ import { useEffect, useState } from 'react';
 import styles from './HotBoard.module.scss';
 import { getHotBoard } from '@/api/BoardAPI';
 import { useNavigate } from 'react-router-dom';
+import { hotBoardState } from '@/recoil/home';
+import { useRecoilState } from 'recoil';
 function HotBoard() {
     const navigate = useNavigate();
-    const [boards, setBoards] = useState<Board[] | null>(null);
-
+    const [boards, setBoards] = useRecoilState<Board[] | null>(hotBoardState);
+    const loadBoards = async () => {
+        try {
+            const data = await getHotBoard(1, 10);
+            setBoards(data.content);
+        } catch (e) {
+            console.error(e);
+        }
+    };
     useEffect(() => {
-        const loadBoards = async () => {
-            try {
-                const data = await getHotBoard(1, 10);
-                setBoards(data.content);
-            } catch (e) {
-                console.error(e);
-            }
-        };
         loadBoards();
     }, []);
 

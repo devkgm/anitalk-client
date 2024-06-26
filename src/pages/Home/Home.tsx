@@ -1,23 +1,21 @@
 import Header from '@/components/Header/Header';
 import styles from './Home.module.scss';
 import Popular from './components/Popular/Popular';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getAnimations } from '@/api/AnimationAPI';
 import AnimationCard from './components/AnimationCard/AnimationCard';
 import Footer from '@/components/Footer/Footer';
 import Loading from '@/components/Loading/Loading';
 import HotBoard from './components/HotBoard/HotBoard';
 import HotAnimation from './HotAnimation/HotAnimation';
+import { useRecoilState } from 'recoil';
+import { animationState } from '@/recoil/home';
 
 function Home() {
-    const [animations, setAnimations] = useState([]);
+    const [animations, setAnimations] = useRecoilState<AnimationResponse[]>(animationState);
     const [page, setPage] = useState(0);
     const SIZE = 100;
-    useEffect(() => {
-        loadAnimations();
-    }, []);
     const loadAnimations = async () => {
-        //애니메이션 데이터 가져오기
         try {
             const data = await getAnimations(page, SIZE);
             setAnimations(data);
@@ -25,6 +23,10 @@ function Home() {
             console.error(e);
         }
     };
+    useEffect(() => {
+        loadAnimations();
+    }, [page]);
+
     const cards = animations.map((ani) => {
         return <AnimationCard data={ani} key={ani.name + ani.id} />;
     });
