@@ -24,7 +24,7 @@ export const getUserComments = async (userId: string): Promise<WithPageResponse<
 export const deleteComment = async (boardId: string, comment: Comment): Promise<void> => {
     try {
         comment.content = '삭제된 댓글';
-        const response = await apiClient.post(`boards/${boardId}/comments`, comment);
+        const response = await apiClient.put(`boards/${boardId}/comments`, comment);
     } catch (error) {
         console.error(error);
         throw new Error('댓글 삭제 오류');
