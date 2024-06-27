@@ -7,10 +7,15 @@ export const animationState = atom({
 
 export const hotAnimationState = atom({
     key: 'hotAnimationState',
-    default: [],
+    default: null,
 });
 
 export const hotBoardState = atom({
     key: 'hotBoardState',
-    default: [],
+    default: null,
+});
+
+export const homePageState = atom({
+    key: 'homePageState',
+    default: 0,
 });

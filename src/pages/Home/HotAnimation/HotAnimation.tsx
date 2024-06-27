@@ -18,7 +18,7 @@ function HotAnimation() {
         }
     };
     useEffect(() => {
-        loadBoards();
+        if (!animations) loadBoards();
     }, []);
 
     return (

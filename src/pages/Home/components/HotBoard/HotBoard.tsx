@@ -16,7 +16,7 @@ function HotBoard() {
         }
     };
     useEffect(() => {
-        loadBoards();
+        if (!boards) loadBoards();
     }, []);
 
     return (

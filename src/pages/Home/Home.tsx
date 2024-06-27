@@ -9,11 +9,12 @@ import Loading from '@/components/Loading/Loading';
 import HotBoard from './components/HotBoard/HotBoard';
 import HotAnimation from './HotAnimation/HotAnimation';
 import { useRecoilState } from 'recoil';
-import { animationState } from '@/recoil/home';
+import { animationState, homePageState } from '@/recoil/home';
 
 function Home() {
     const [animations, setAnimations] = useRecoilState<AnimationResponse[] | null>(animationState);
-    const [page, setPage] = useState(0);
+    const [prevPage, setPrevPage] = useRecoilState(homePageState);
+    const [page, setPage] = useState(prevPage);
     const [isLoading, setIsLoading] = useState(false);
     const aniCardRef = useRef(null);
     const observer = useRef(null);
@@ -49,7 +50,13 @@ function Home() {
         }
     }, []);
     useEffect(() => {
-        loadAnimations();
+        if (page === 0 && !animations) {
+            loadAnimations();
+        }
+        if (prevPage !== page) {
+            setPrevPage(page);
+            loadAnimations();
+        }
     }, [page]);
     const cards = animations?.map((ani, index) => {
         return (
