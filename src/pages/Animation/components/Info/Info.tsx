@@ -1,24 +1,49 @@
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styles from './Info.module.scss';
 import { userState } from '@/recoil/auth';
 import { likeAnimation, unLikeAnimation } from '@/api/AnimationAPI';
 import { useEffect, useRef, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
+import { animationState } from '@/recoil/home';
 
 interface Prop {
     data: AnimationResponse;
 }
 function Info({ data }: Prop) {
     const [favorite, setFavorite] = useState(data.favorite);
+    const [animations, setAnimations] = useRecoilState(animationState);
     const handleLike = async () => {
         try {
             if (favorite.isFavorite) {
                 await unLikeAnimation(data.id);
                 setFavorite({ ...favorite, isFavorite: false });
+                animations?.forEach((ani: AnimationResponse, index) => {
+                    if (ani.id === data.id) {
+                        setAnimations((prev: AnimationResponse[]) => {
+                            return [
+                                ...prev.slice(0, index),
+                                ...[{ ...ani, favorite: { ...ani.favorite, isFavorite: false } }],
+                                ...prev.slice(index + 1),
+                            ];
+                        });
+                    }
+                });
                 toast('좋아요를 취소했습니다😢');
             } else {
                 await likeAnimation(data.id);
                 setFavorite({ ...favorite, isFavorite: true });
+                animations?.forEach((ani: AnimationResponse, index) => {
+                    if (ani.id === data.id) {
+                        setAnimations((prev: AnimationResponse[]) => {
+                            return [
+                                ...prev.slice(0, index),
+                                ...[{ ...ani, favorite: { ...ani.favorite, isFavorite: true } }],
+                                ...prev.slice(index + 1),
+                            ];
+                        });
+                    }
+                });
+
                 toast('북마크에 저장🥰');
             }
         } catch (e) {
