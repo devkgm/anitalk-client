@@ -10,6 +10,9 @@ import Modal from '@/components/Modal/Modal';
 import PasswordChange from './components/PasswordChange/PasswordChange';
 import NicknameChange from './components/NicknameChange/NicknameChange';
 import { logout } from '@/api/UserAPI';
+import { getUserLikeAnimation } from '@/api/AnimationAPI';
+import AnimationCard from '../Home/components/AnimationCard/AnimationCard';
+import { selectedArticleState } from '@/recoil/mypage';
 
 function MyPage() {
     const navigate = useNavigate();
@@ -17,9 +20,10 @@ function MyPage() {
     const [user, setUser] = useRecoilState(userState);
     const [boards, setBoards] = useState<MyBoardVO[]>([]);
     const [comments, setComments] = useState<Comment[]>([]);
+    const [animations, setAnimations] = useState<AnimationResponse[]>([]);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [modalContent, setModalContent] = useState('');
-    const [activeTab, setActiveTab] = useState<'board' | 'comment' | 'favorite'>('board');
+    const [activeTab, setActiveTab] = useRecoilState<'board' | 'comment' | 'favorite'>(selectedArticleState);
 
     useEffect(() => {
         const loadBoards = async () => {
@@ -38,9 +42,18 @@ function MyPage() {
                 console.error(e);
             }
         };
+        const loadAnimations = async () => {
+            try {
+                const data = await getUserLikeAnimation();
+                setAnimations(data.content);
+            } catch (e) {
+                console.error(e);
+            }
+        };
         if (user.id) {
             loadBoards();
             loadComments();
+            loadAnimations();
         }
     }, [user]);
 
@@ -138,7 +151,24 @@ function MyPage() {
                         </ul>
                     </div>
                 )}
-                {activeTab === 'favorite' && <div className={styles.content}>즐겨찾기 목록을 여기에 표시합니다.</div>}
+                {activeTab === 'favorite' && (
+                    <div className={styles.content}>
+                        <div className={styles.content}>
+                            <ul className={styles.aniList}>
+                                {activeTab === 'favorite' &&
+                                    animations.map((ani) => (
+                                        <li
+                                            className={styles.aniListItem}
+                                            key={ani.id}
+                                            onClick={() => navigate(`/animations/${ani.id}`)}
+                                        >
+                                            <AnimationCard data={ani} key={ani.id + ani.name} />
+                                        </li>
+                                    ))}
+                            </ul>
+                        </div>
+                    </div>
+                )}
                 <div className={styles.buttons}>
                     <button type="button" onClick={handleLogOut} className={styles.logoutButton}>
                         로그아웃

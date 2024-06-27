@@ -53,3 +53,14 @@ export const unLikeAnimation = async (animationId: string) => {
         throw new Error('애니 좋아요 실패');
     }
 };
+
+export const getUserLikeAnimation = async () => {
+    try {
+        const response = await apiClient.get(`animations/users`);
+        console.log(response);
+        return response.data.data;
+    } catch (err) {
+        console.error(err);
+        throw new Error('좋아요한 애니메이션 불러오기 실패');
+    }
+};
