@@ -19,6 +19,8 @@ function MyPage() {
     const [comments, setComments] = useState<Comment[]>([]);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [modalContent, setModalContent] = useState('');
+    const [activeTab, setActiveTab] = useState<'board' | 'comment' | 'favorite'>('board');
+
     useEffect(() => {
         const loadBoards = async () => {
             try {
@@ -54,60 +56,90 @@ function MyPage() {
             console.error(e);
         }
     };
+
     const handlePasswordChange = () => {
         setModalContent('password');
         toggleModal();
     };
+
     const handleNickNameChange = () => {
         setModalContent('nickname');
         toggleModal();
     };
+
     const toggleModal = () => {
         setShowModal(!showModal);
     };
+
     return (
         <div className={styles.container}>
             <Header />
             <div className={styles.section}>
-                <div className={styles.article}>
-                    <div className={styles.title}>마이페이지</div>
-                    <div className={styles.userInfo}>
-                        <div>{user.nickname}님 안녕하세요!</div>
-                    </div>
-                    <div className={styles.articleTitle}>작성한 게시글</div>
-                    <ul className={styles.list}>
-                        {boards.map((board) => (
-                            <li
-                                className={styles.listItem}
-                                key={board.id}
-                                onClick={() => navigate(`/animations/${board.animationId}/boards/${board.id}`)}
-                            >
-                                <div className={styles.listItemTitle}>{board.animationName}</div>
-                                <div className={styles.listItemTitle}>{board.title}</div>
-                                <div className={styles.listItemDetail}>{board.hit} 조회</div>
-                                <div className={styles.listItemDetail}>{board.nickname}</div>
-                                <div className={styles.listItemDetail}>{board.writeDate}</div>
-                            </li>
-                        ))}
-                    </ul>
+                <div className={styles.title}>마이페이지</div>
+                <div className={styles.userInfo}>
+                    <div>{user.nickname}님 안녕하세요!</div>
                 </div>
-                <div className={styles.article}>
-                    <div className={styles.articleTitle}>작성한 댓글</div>
-                    <ul className={styles.list}>
-                        {comments.map((comment) => (
-                            <li
-                                className={styles.listItem}
-                                key={comment.id + comment.date}
-                                onClick={() => navigate(`/animations/${comment.animationId}/boards/${comment.boardId}`)}
-                            >
-                                <div className={styles.listItemDetail}>{comment.animationName}</div>
-                                <div className={styles.listItemDetail}>{comment.boardTitle}</div>
-                                <div className={styles.listItemDetail}>{comment.nickname}</div>
-                                <div className={styles.listItemContent}>{comment.content}</div>
-                                <div className={styles.listItemDetail}>{comment.date}</div>
-                            </li>
-                        ))}
-                    </ul>
+                <div className={styles.navigation}>
+                    <button
+                        className={`${styles.navButton} ${activeTab === 'board' && styles.active}`}
+                        onClick={() => setActiveTab('board')}
+                    >
+                        작성한 게시글
+                    </button>
+                    <button
+                        className={`${styles.navButton} ${activeTab === 'comment' && styles.active}`}
+                        onClick={() => setActiveTab('comment')}
+                    >
+                        작성한 댓글
+                    </button>
+                    <button
+                        className={`${styles.navButton} ${activeTab === 'favorite' && styles.active}`}
+                        onClick={() => setActiveTab('favorite')}
+                    >
+                        즐겨찾기
+                    </button>
+                </div>
+                {activeTab === 'board' && (
+                    <div className={styles.content}>
+                        <ul className={styles.list}>
+                            {boards.map((board) => (
+                                <li
+                                    className={styles.listItem}
+                                    key={board.id}
+                                    onClick={() => navigate(`/animations/${board.animationId}/boards/${board.id}`)}
+                                >
+                                    <div className={styles.listItemTitle}>{board.animationName}</div>
+                                    <div className={styles.listItemTitle}>{board.title}</div>
+                                    <div className={styles.listItemDetail}>{board.hit} 조회</div>
+                                    <div className={styles.listItemDetail}>{board.writeDate}</div>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+                {activeTab === 'comment' && (
+                    <div className={styles.content}>
+                        <ul className={styles.list}>
+                            {comments.map((comment) => (
+                                <li
+                                    className={styles.listItem}
+                                    key={comment.id + comment.date}
+                                    onClick={() =>
+                                        navigate(`/animations/${comment.animationId}/boards/${comment.boardId}`)
+                                    }
+                                >
+                                    <div className={styles.listItemDetail}>{comment.animationName}</div>
+                                    <div className={styles.listItemDetail}>{comment.boardTitle}</div>
+                                    <div className={styles.listItemDetail}>{comment.nickname}</div>
+                                    <div className={styles.listItemContent}>{comment.content}</div>
+                                    <div className={styles.listItemDetail}>{comment.date}</div>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+                {activeTab === 'favorite' && <div className={styles.content}>즐겨찾기 목록을 여기에 표시합니다.</div>}
+                <div className={styles.buttons}>
                     <button type="button" onClick={handleLogOut} className={styles.logoutButton}>
                         로그아웃
                     </button>

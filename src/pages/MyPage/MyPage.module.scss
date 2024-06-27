@@ -9,88 +9,114 @@ $transition-duration: 0.3s;
     background-color: $background-color;
     border-radius: $border-radius;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: $primary-color;
-}
-
-.userInfo {
-    font-size: 18px;
-    margin-bottom: 30px;
-    color: $text-color;
-}
-.section {
-    margin: auto;
-    width: 100%;
-    max-width: 1000px;
-
     padding: 20px;
-}
-.article {
-    margin-bottom: 30px;
 
-    &Title {
-        font-size: 20px;
-        font-weight: bold;
-        margin-bottom: 10px;
-        color: $primary-color;
-    }
-}
+    .section {
+        margin: auto;
+        width: 100%;
+        max-width: 1000px;
+        padding: 20px;
 
-.list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: $primary-color;
+        }
 
-.listItem {
-    padding: 15px;
-    margin-bottom: 10px;
-    background-color: white;
-    border: 1px solid #eaeaea;
-    border-radius: $border-radius;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    transition: background-color $transition-duration, transform $transition-duration;
+        .userInfo {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: $text-color;
+        }
 
-    &:hover {
-        background-color: $primary-color;
-        color: white;
-        transform: translateY(-2px);
-    }
+        .navigation {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
 
-    &Title {
-        flex: 2;
-        font-weight: bold;
-    }
+            .navButton {
+                padding: 10px 20px;
+                margin: 0 10px;
+                font-size: 16px;
+                color: $text-color;
+                background-color: white;
+                border: 1px solid #eaeaea;
+                border-radius: $border-radius;
+                cursor: pointer;
+                transition: background-color $transition-duration;
 
-    &Detail,
-    &Content {
-        flex: 1;
-        text-align: center;
-    }
-}
+                &.active {
+                    background-color: $primary-color;
+                    color: white;
+                }
 
-.logoutButton,
-.pwdChangeButton,
-.nicknameChangeButton {
-    margin-left: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    color: white;
-    background-color: $secondary-color;
-    border: none;
-    border-radius: $border-radius;
-    cursor: pointer;
-    transition: background-color $transition-duration;
+                &:hover:not(.active) {
+                    background-color: $background-color;
+                }
+            }
+        }
 
-    &:hover {
-        background-color: darken($secondary-color, 10%);
+        .content {
+            .list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+
+                .listItem {
+                    padding: 15px;
+                    margin-bottom: 10px;
+                    background-color: white;
+                    border: 1px solid #eaeaea;
+                    border-radius: $border-radius;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    cursor: pointer;
+                    transition: background-color $transition-duration, transform $transition-duration;
+
+                    &:hover {
+                        background-color: $primary-color;
+                        color: white;
+                        transform: translateY(-2px);
+                    }
+
+                    .listItemTitle {
+                        flex: 2;
+                        font-weight: bold;
+                    }
+
+                    .listItemDetail,
+                    .listItemContent {
+                        flex: 1;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+
+            .logoutButton,
+            .pwdChangeButton,
+            .nicknameChangeButton {
+                margin: 0 10px;
+                padding: 10px 20px;
+                font-size: 16px;
+                color: white;
+                background-color: $secondary-color;
+                border: none;
+                border-radius: $border-radius;
+                cursor: pointer;
+                transition: background-color $transition-duration;
+
+                &:hover {
+                    background-color: darken($secondary-color, 10%);
+                }
+            }
+        }
     }
 }
