@@ -28,10 +28,14 @@ export const getBoard = async (animationId: string, id: string): Promise<BoardRe
     }
 };
 
-export const getUserBoards = async (userId: string): Promise<Board[]> => {
+export const getUserBoards = async (
+    userId: string,
+    page: number = 0,
+    size: number = 10
+): Promise<WithPageResponse<MyBoardVO>> => {
     try {
-        const response = await apiClient.get(`boards/users/${userId}`);
-        const data: Board[] = response.data.data.content;
+        const response = await apiClient.get(`boards/users/${userId}?page=${page}&size=${size}`);
+        const data: WithPageResponse<MyBoardVO> = response.data.data;
         return data;
     } catch (err) {
         console.error(err);

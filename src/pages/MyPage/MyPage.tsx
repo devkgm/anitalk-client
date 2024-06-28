@@ -13,50 +13,54 @@ import { logout } from '@/api/UserAPI';
 import { getUserLikeAnimation } from '@/api/AnimationAPI';
 import AnimationCard from '../Home/components/AnimationCard/AnimationCard';
 import { selectedArticleState } from '@/recoil/mypage';
+import Pagination from '@/components/Pagination/Pagination';
 
 function MyPage() {
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
     const [user, setUser] = useRecoilState(userState);
-    const [boards, setBoards] = useState<MyBoardVO[]>([]);
+    const [boards, setBoards] = useState<MyBoardVO[] | null>(null);
     const [comments, setComments] = useState<Comment[]>([]);
     const [animations, setAnimations] = useState<AnimationResponse[]>([]);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [modalContent, setModalContent] = useState('');
     const [activeTab, setActiveTab] = useRecoilState<'board' | 'comment' | 'favorite'>(selectedArticleState);
-
+    const [page, setPage] = useState(null);
+    const [currentPage, setCurrentPage] = useState(0);
     useEffect(() => {
-        const loadBoards = async () => {
-            try {
-                const data = await getUserBoards(user.id);
-                setBoards(data);
-            } catch (e) {
-                console.error(e);
-            }
-        };
-        const loadComments = async () => {
-            try {
-                const data = await getUserComments(user.id);
-                setComments(data.content);
-            } catch (e) {
-                console.error(e);
-            }
-        };
-        const loadAnimations = async () => {
-            try {
-                const data = await getUserLikeAnimation();
-                setAnimations(data.content);
-            } catch (e) {
-                console.error(e);
-            }
-        };
+        console.log(currentPage);
         if (user.id) {
-            loadBoards();
-            loadComments();
-            loadAnimations();
+            activeTab == 'board' && loadBoards();
+            activeTab == 'comment' && loadComments();
+            activeTab == 'favorite' && loadAnimations();
         }
-    }, [user]);
-
+    }, [currentPage, user, activeTab]);
+    const loadBoards = async () => {
+        try {
+            const data = await getUserBoards(user.id, currentPage);
+            setBoards(data.content);
+            setPage(data.page);
+        } catch (e) {
+            console.error(e);
+        }
+    };
+    const loadComments = async () => {
+        try {
+            const data = await getUserComments(user.id, currentPage);
+            setComments(data.content);
+            setPage(data.page);
+        } catch (e) {
+            console.error(e);
+        }
+    };
+    const loadAnimations = async () => {
+        try {
+            const data = await getUserLikeAnimation();
+            setAnimations(data.content);
+        } catch (e) {
+            console.error(e);
+        }
+    };
     const handleLogOut = async () => {
         try {
             await logout(user);
@@ -83,7 +87,10 @@ function MyPage() {
     const toggleModal = () => {
         setShowModal(!showModal);
     };
-
+    const handleTapChange = (tab: 'board' | 'comment' | 'favorite') => {
+        setActiveTab(tab);
+        setCurrentPage(0);
+    };
     return (
         <div className={styles.container}>
             <Header />
@@ -95,19 +102,19 @@ function MyPage() {
                 <div className={styles.navigation}>
                     <button
                         className={`${styles.navButton} ${activeTab === 'board' && styles.active}`}
-                        onClick={() => setActiveTab('board')}
+                        onClick={() => handleTapChange('board')}
                     >
                         작성한 게시글
                     </button>
                     <button
                         className={`${styles.navButton} ${activeTab === 'comment' && styles.active}`}
-                        onClick={() => setActiveTab('comment')}
+                        onClick={() => handleTapChange('comment')}
                     >
                         작성한 댓글
                     </button>
                     <button
                         className={`${styles.navButton} ${activeTab === 'favorite' && styles.active}`}
-                        onClick={() => setActiveTab('favorite')}
+                        onClick={() => handleTapChange('favorite')}
                     >
                         즐겨찾기
                     </button>
@@ -115,19 +122,25 @@ function MyPage() {
                 {activeTab === 'board' && (
                     <div className={styles.content}>
                         <ul className={styles.list}>
-                            {boards.map((board) => (
-                                <li
-                                    className={styles.listItem}
-                                    key={board.id}
-                                    onClick={() => navigate(`/animations/${board.animationId}/boards/${board.id}`)}
-                                >
-                                    <div className={styles.listItemTitle}>{board.animationName}</div>
-                                    <div className={styles.listItemTitle}>{board.title}</div>
-                                    <div className={styles.listItemDetail}>{board.hit} 조회</div>
-                                    <div className={styles.listItemDetail}>{board.writeDate}</div>
-                                </li>
-                            ))}
+                            {boards &&
+                                boards.map((board) => (
+                                    <li
+                                        className={styles.listItem}
+                                        key={board.id}
+                                        onClick={() => navigate(`/animations/${board.animationId}/boards/${board.id}`)}
+                                    >
+                                        <div className={styles.listItemTitle}>{board.animationName}</div>
+                                        <div className={styles.listItemTitle}>{board.title}</div>
+                                        <div className={styles.listItemDetail}>{board.hit} 조회</div>
+                                        <div className={styles.listItemDetail}>{board.writeDate}</div>
+                                    </li>
+                                ))}
                         </ul>
+                        {boards && (
+                            <div className={styles.pagination}>
+                                <Pagination page={page} perBlock={10} onPageChange={setCurrentPage} />
+                            </div>
+                        )}
                     </div>
                 )}
                 {activeTab === 'comment' && (
@@ -149,6 +162,11 @@ function MyPage() {
                                 </li>
                             ))}
                         </ul>
+                        {comments && (
+                            <div className={styles.pagination}>
+                                <Pagination page={page} perBlock={10} onPageChange={setCurrentPage} />
+                            </div>
+                        )}
                     </div>
                 )}
                 {activeTab === 'favorite' && (

@@ -87,7 +87,7 @@ function Board({ animationId }: Prop) {
                 </ul>
                 {page && (
                     <div className={styles.pagination}>
-                        <Pagination page={page} perBlock={2} onPageChange={setCurrentPage} />
+                        <Pagination page={page} perBlock={10} onPageChange={setCurrentPage} />
                     </div>
                 )}
             </div>

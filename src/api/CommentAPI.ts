@@ -10,9 +10,13 @@ export const getComments = async (boardId: string): Promise<WithPageResponse<Com
     }
 };
 
-export const getUserComments = async (userId: string): Promise<WithPageResponse<Comment>> => {
+export const getUserComments = async (
+    userId: string,
+    page: number = 0,
+    size: number = 10
+): Promise<WithPageResponse<Comment>> => {
     try {
-        const response = await apiClient.get(`comments/users/${userId}`);
+        const response = await apiClient.get(`comments/users/${userId}?page=${page}&size=${size}`);
         const data: WithPageResponse<Comment> = response.data.data;
         return data;
     } catch (error) {
