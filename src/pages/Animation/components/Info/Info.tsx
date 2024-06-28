@@ -5,11 +5,13 @@ import { likeAnimation, unLikeAnimation } from '@/api/AnimationAPI';
 import { useEffect, useRef, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { animationState } from '@/recoil/home';
+import { useNavigate } from 'react-router-dom';
 
 interface Prop {
     data: AnimationResponse;
 }
 function Info({ data }: Prop) {
+    const navigate = useNavigate();
     const [favorite, setFavorite] = useState(data.favorite);
     const [animations, setAnimations] = useRecoilState(animationState);
     const handleLike = async () => {
@@ -86,6 +88,9 @@ function Info({ data }: Prop) {
                     </div>
                 </div>
 
+                <div className={`${styles.edit}`} onClick={() => navigate('/animations/write/' + data.id)}>
+                    <span className="material-symbols-outlined">edit</span>
+                </div>
                 <div className={`${styles.favorite} ${favorite.isFavorite && styles.liked}`} onClick={handleLike}>
                     <span className="material-symbols-outlined">favorite</span>
                 </div>

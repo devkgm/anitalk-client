@@ -29,8 +29,10 @@ function App() {
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/animations/:animationId" element={<Animation />} />
-                <Route path="/animations/:animationId/write" element={<WriteBoard />} />
+                <Route path="/animations/:animationId/boards/write/:boardId" element={<WriteBoard />} />
+                <Route path="/animations/:animationId/boards/write" element={<WriteBoard />} />
                 <Route path="/animations/:animationId/boards/:boardId" element={<Board />} />
+                <Route path="/animations/write/:animationId" element={<WriteAnimation />} />
                 <Route path="/animations/write" element={<WriteAnimation />} />
             </Routes>
         </BrowserRouter>

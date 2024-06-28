@@ -64,3 +64,14 @@ export const getUserLikeAnimation = async () => {
         throw new Error('좋아요한 애니메이션 불러오기 실패');
     }
 };
+
+export const updateAnimation = async (data: Animation) => {
+    try {
+        const response = await apiClient.put(`animations/${data.id}`, data);
+        console.log(response);
+        return response.data.data;
+    } catch (err) {
+        console.error(err);
+        throw new Error('애니메이션 업데이트 실패');
+    }
+};

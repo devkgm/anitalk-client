@@ -48,7 +48,8 @@
             }
         }
 
-        .favorite {
+        .favorite,
+        .edit {
             &:hover {
                 cursor: pointer;
             }

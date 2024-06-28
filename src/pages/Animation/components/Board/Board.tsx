@@ -57,7 +57,7 @@ function Board({ animationId }: Prop) {
                     <div className={styles.boards__nav__button}>
                         <button
                             className={styles.boards__nav__button__create}
-                            onClick={() => navigate(`/animations/${animationId}/write`)}
+                            onClick={() => navigate(`/animations/${animationId}/boards/write`)}
                         >
                             글쓰기
                         </button>
