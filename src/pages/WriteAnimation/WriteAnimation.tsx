@@ -13,7 +13,7 @@ import { deleteFile, uploadFile, uploadFileWithParent } from '@/api/FileAPI';
 function WriteAnimation() {
     const { animationId } = useParams();
     const navigate = useNavigate();
-    const [animation, setAnimation] = useState<Animation | null>(null);
+    const [animation, setAnimation] = useState<AnimationRequest | null>(null);
     useEffect(() => {
         const loadAnimation = async () => {
             try {
@@ -50,7 +50,13 @@ function WriteAnimation() {
             const formData = new FormData();
             formData.append('attach', e.target.files[0]);
             const data = await uploadFile('animations', formData);
-            console.log(data);
+            const request = {
+                ...animation,
+                thumbnailUrl: data.url,
+                attach: [data.id],
+            };
+            setAnimation(request);
+            await updateAnimation(request);
         } catch (error) {
             console.error(error);
         }
