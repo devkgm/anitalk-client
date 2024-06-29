@@ -136,7 +136,7 @@ function MyPage() {
                                     </li>
                                 ))}
                         </ul>
-                        {boards && (
+                        {boards && page && (
                             <div className={styles.pagination}>
                                 <Pagination page={page} perBlock={10} onPageChange={setCurrentPage} />
                             </div>
@@ -162,7 +162,7 @@ function MyPage() {
                                 </li>
                             ))}
                         </ul>
-                        {comments && (
+                        {comments && page && (
                             <div className={styles.pagination}>
                                 <Pagination page={page} perBlock={10} onPageChange={setCurrentPage} />
                             </div>
