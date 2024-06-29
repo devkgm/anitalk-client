@@ -7,7 +7,7 @@ import styles from './WriteAnimation.module.scss';
 import toast, { Toaster } from 'react-hot-toast';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
-import { getAnimation, updateAnimation } from '@/api/AnimationAPI';
+import { getAnimation, updateAnimation, uploadAnimation } from '@/api/AnimationAPI';
 import { deleteFile, uploadFile, uploadFileWithParent } from '@/api/FileAPI';
 
 function WriteAnimation() {
@@ -34,15 +34,26 @@ function WriteAnimation() {
         }));
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleUpdate = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const updatedAnimation = await updateAnimation(animation);
+            const data = await updateAnimation(animation);
             toast('애니메이션 정보가 업데이트되었습니다.');
             navigate(`/animations/${animation.id}`);
         } catch (error) {
             console.error(error);
             toast.error('업데이트 중 오류가 발생했습니다.');
+        }
+    };
+    const handleUpload = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            const data = await uploadAnimation(animation);
+            toast('애니메이션이 업로드되었습니다.');
+            navigate(`/animations/${data.id}`);
+            toast.remove();
+        } catch (error) {
+            console.error(error);
         }
     };
     const handleUploadFile = async (e) => {
@@ -55,8 +66,8 @@ function WriteAnimation() {
                 thumbnailUrl: data.url,
                 attach: [data.id],
             };
+            if (animation?.id) await updateAnimation(request);
             setAnimation(request);
-            await updateAnimation(request);
         } catch (error) {
             console.error(error);
         }
@@ -65,7 +76,7 @@ function WriteAnimation() {
         <div className={styles.container}>
             <Header />
             <section className={styles.section}>
-                <form className={styles.form} onSubmit={handleSubmit}>
+                <form className={styles.form}>
                     <div className={styles.row}>
                         <div className={styles.divide}>
                             <div className={styles.imageContainer}>
@@ -163,10 +174,15 @@ function WriteAnimation() {
                             </div>
                         </div>
                     </div>
-
-                    <button type="submit" className={styles.submitButton}>
-                        업데이트
-                    </button>
+                    {animation?.id ? (
+                        <button type="button" className={styles.submitButton} onClick={handleUpdate}>
+                            저장
+                        </button>
+                    ) : (
+                        <button type="button" className={styles.submitButton} onClick={handleUpload}>
+                            업로드
+                        </button>
+                    )}
                 </form>
             </section>
             <Footer />

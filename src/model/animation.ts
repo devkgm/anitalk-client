@@ -9,7 +9,7 @@ interface Animation {
     originWriter?: string;
     season?: string;
     onDate?: string;
-    episode?: string;
+    episode?: number;
     startDate?: string;
     currentDate?: string;
     thumbnailUrl?: string;

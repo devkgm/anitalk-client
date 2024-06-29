@@ -65,7 +65,18 @@ export const getUserLikeAnimation = async () => {
     }
 };
 
-export const updateAnimation = async (data: Animation) => {
+export const uploadAnimation = async (data: AnimationRequest) => {
+    try {
+        const response = await apiClient.post(`animations`, data);
+        console.log(response);
+        return response.data.data;
+    } catch (err) {
+        console.error(err);
+        throw new Error('애니메이션 업로드 실패');
+    }
+};
+
+export const updateAnimation = async (data: AnimationRequest) => {
     try {
         const response = await apiClient.put(`animations/${data.id}`, data);
         console.log(response);
