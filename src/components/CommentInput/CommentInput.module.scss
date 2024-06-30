@@ -1,0 +1,58 @@
+$padding: 15px;
+$margin: 10px 0;
+.container {
+    width: 100%;
+    .card {
+        margin-top: 10px;
+        width: 100%;
+
+        background-color: white;
+        @include shadow;
+        border-radius: $border-radius;
+        .cardBody {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            padding: $padding;
+            .title {
+                font-size: 1.5rem;
+                font-weight: bold;
+                margin-bottom: 20px;
+                color: $text-color;
+
+                &__text {
+                    display: inline-block;
+                }
+            }
+            .inputContainer {
+                display: flex;
+                gap: 10px;
+                flex: 1;
+                .commentInput {
+                    border-radius: $border-radius;
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid rgba(0, 0, 0, 0.4);
+                    resize: none;
+                    overflow-y: scroll;
+                }
+                .submitButton {
+                    background-color: $mainColor;
+                    border: none;
+                    border-radius: $border-radius;
+                    color: white;
+                    font-weight: 700;
+                    text-wrap: nowrap;
+                    padding: 10px 20px;
+
+                    &:hover {
+                        cursor: pointer;
+                    }
+                    &:active {
+                        background-color: darken($mainColor, 10%);
+                    }
+                }
+            }
+        }
+    }
+}

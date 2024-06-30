@@ -4,6 +4,7 @@ export const getComments = async (boardId: string): Promise<WithPageResponse<Com
     try {
         const response = await apiClient.get(`boards/${boardId}/comments`);
         const data: WithPageResponse<Comment> = response.data.data;
+        console.log(data);
         return data;
     } catch (error) {
         throw new Error('댓글 목록 읽어오기 오류');
@@ -32,5 +33,16 @@ export const deleteComment = async (boardId: string, comment: Comment): Promise<
     } catch (error) {
         console.error(error);
         throw new Error('댓글 삭제 오류');
+    }
+};
+
+export const uploadComment = async (boardId: string, comment: Comment) => {
+    try {
+        const response = await apiClient.post(`boards/${boardId}/comments`, comment);
+        console.log(response);
+        return response.data.data;
+    } catch (err) {
+        console.error(err);
+        throw new Error('댓글 업로드 실패');
     }
 };
