@@ -15,7 +15,7 @@ function Board() {
     const navigate = useNavigate();
     const { animationId, boardId } = useParams();
     const [page, setPage] = useState(null);
-    const [currentPage, setCurrentPage] = useState(0);
+    const [currentPage, setCurrentPage] = useState(-1);
     const [board, setBoard] = useState<BoardResponse | null>(null);
     const [comments, setComments] = useState<Comment[] | null>(null);
     const [selectedComment, setSelectedComment] = useState(null);
@@ -34,10 +34,11 @@ function Board() {
     const loadComment = async () => {
         try {
             let data = null;
+            console.log(page, currentPage);
             if (page) {
                 data = await getComments(boardId, page.endPage - currentPage, 20);
             } else {
-                data = await getComments(boardId, currentPage, 20);
+                data = await getComments(boardId, 0, 20);
             }
             setComments(data.content);
             setPage(data.page);
@@ -50,6 +51,7 @@ function Board() {
         loadComment();
     }, []);
     useEffect(() => {
+        console.log(currentPage);
         loadComment();
     }, [currentPage]);
     useEffect(() => {
