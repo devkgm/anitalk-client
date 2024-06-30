@@ -28,7 +28,6 @@ function MyPage() {
     const [page, setPage] = useState(null);
     const [currentPage, setCurrentPage] = useState(0);
     useEffect(() => {
-        console.log(currentPage);
         if (user.id) {
             activeTab == 'board' && loadBoards();
             activeTab == 'comment' && loadComments();

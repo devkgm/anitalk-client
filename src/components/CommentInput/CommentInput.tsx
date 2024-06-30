@@ -2,15 +2,16 @@ import { useState } from 'react';
 import styles from './CommentInput.module.scss';
 function CommentInput({ handleSubmit }) {
     const [commentInput, setCommentInput] = useState('');
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    const handleKeyUp = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.nativeEvent.isComposing) return;
         if (e.key === 'Enter') {
+            if (e.shiftKey) return;
             handleSubmitComment();
         }
     };
     const handleSubmitComment = () => {
-        if (commentInput === '') return;
-        handleSubmit(commentInput);
+        if (commentInput.trim() === '') return;
+        handleSubmit(commentInput.trim());
         setCommentInput('');
     };
     return (
@@ -26,7 +27,7 @@ function CommentInput({ handleSubmit }) {
                             placeholder="댓글을 입력하세요"
                             value={commentInput}
                             onChange={(e) => setCommentInput(e.target.value)}
-                            onKeyDown={handleKeyDown}
+                            onKeyUp={handleKeyUp}
                         />
                         <button className={styles.submitButton} onClick={handleSubmitComment}>
                             등록

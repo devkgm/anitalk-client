@@ -11,7 +11,7 @@ function HotAnimation() {
     const loadBoards = async () => {
         try {
             const data = await getHotAnimation(1, 10);
-            console.log(data);
+            data;
             setAnimations(data.content);
         } catch (e) {
             console.error(e);

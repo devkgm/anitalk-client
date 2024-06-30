@@ -37,7 +37,7 @@ function Home() {
                 (entries) => {
                     entries.forEach((entry) => {
                         if (entry.isIntersecting && !isLoading) {
-                            console.log('Observed');
+                            ('Observed');
                             setPage((prev) => prev + 1);
                         }
                     });

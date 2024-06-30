@@ -16,7 +16,6 @@ function Animation() {
         const getData = async () => {
             try {
                 const data = await getAnimation(animationId);
-                console.log(data);
                 setAnimation(data);
             } catch (e) {
                 console.error(e);

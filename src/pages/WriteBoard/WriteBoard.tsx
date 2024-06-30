@@ -26,7 +26,6 @@ function WriteBoard() {
             return [...prev, attachId];
         });
     };
-    console.log(attaches);
     const submit = async () => {
         try {
             const boardData: BoardAdd = {};

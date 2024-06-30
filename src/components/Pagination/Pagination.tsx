@@ -22,7 +22,6 @@ function Pagination({ page, perBlock, onPageChange }: Props) {
 
     const handleChangePage = (pageIndex: number) => {
         onPageChange(pageIndex);
-        navigate(`?page=${pageIndex}`);
     };
 
     const startPage = Math.floor(currentPage / perBlock) * perBlock;

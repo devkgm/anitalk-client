@@ -8,7 +8,6 @@ export const getBoards = async (
 ): Promise<WithPageResponse<Board>> => {
     try {
         const response = await apiClient.get(`animations/${animationId}/boards?page=${page}&size=${size}&type=${type}`);
-        console.log(response);
         const data: WithPageResponse<Board> = response.data.data;
         return data;
     } catch (err) {
@@ -56,7 +55,6 @@ export const uploadBoard = async (animationId: string, data: BoardAdd): Promise<
 export const likeBoard = async (animationId: string, boardId: string) => {
     try {
         const response = await apiClient.post(`animations/${animationId}/boards/${boardId}/like`);
-        console.log(response);
         return response.data.data;
     } catch (err) {
         console.error(err);
@@ -67,7 +65,6 @@ export const likeBoard = async (animationId: string, boardId: string) => {
 export const unLikeBoard = async (animationId: string, boardId: string) => {
     try {
         const response = await apiClient.delete(`animations/${animationId}/boards/${boardId}/like`);
-        console.log(response);
         return response.data.data;
     } catch (err) {
         console.error(err);
@@ -78,7 +75,6 @@ export const unLikeBoard = async (animationId: string, boardId: string) => {
 export const getHotBoard = async (page: number, size: number) => {
     try {
         const response = await apiClient.get(`boards?page=${page}&size=${size}`);
-        console.log(response);
         const data: WithPageResponse<Board> = response.data.data;
         return data;
     } catch (err) {

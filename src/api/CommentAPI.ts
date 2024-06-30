@@ -1,10 +1,9 @@
 import { apiClient } from '@/util/apiClient';
 
-export const getComments = async (boardId: string): Promise<WithPageResponse<Comment>> => {
+export const getComments = async (boardId: string, page = 0, size = 20): Promise<WithPageResponse<Comment>> => {
     try {
-        const response = await apiClient.get(`boards/${boardId}/comments`);
+        const response = await apiClient.get(`boards/${boardId}/comments?page=${page}&size=${size}`);
         const data: WithPageResponse<Comment> = response.data.data;
-        console.log(data);
         return data;
     } catch (error) {
         throw new Error('댓글 목록 읽어오기 오류');
@@ -39,7 +38,6 @@ export const deleteComment = async (boardId: string, comment: Comment): Promise<
 export const uploadComment = async (boardId: string, comment: Comment) => {
     try {
         const response = await apiClient.post(`boards/${boardId}/comments`, comment);
-        console.log(response);
         return response.data.data;
     } catch (err) {
         console.error(err);

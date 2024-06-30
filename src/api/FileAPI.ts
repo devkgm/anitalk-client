@@ -17,7 +17,6 @@ export const uploadFileWithParent = async (category: string, form: FormData, par
         const response = await apiClient.post(`attaches/${category}/parent/${parentId}`, form, {
             headers: { 'Content-Type': 'multipart/form-data' },
         });
-        console.log(response);
         return response.data;
     } catch (err) {
         console.error(err);
@@ -28,7 +27,6 @@ export const uploadFileWithParent = async (category: string, form: FormData, par
 export const deleteFile = async (id) => {
     try {
         const response = await apiClient.delete(`attaches/${id}`);
-        console.log(response);
         return response.data;
     } catch (err) {
         console.error(err);

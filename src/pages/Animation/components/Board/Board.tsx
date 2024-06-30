@@ -31,7 +31,6 @@ function Board({ animationId }: Prop) {
         try {
             const data: WithPageResponse<Board> = await getBoards(animationId, currentPage, PER_PAGE, type);
             setPage(data.page);
-            console.log(data.page);
             setBoards(data.content);
         } catch (e) {
             console.error(e);

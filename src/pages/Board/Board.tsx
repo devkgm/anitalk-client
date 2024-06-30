@@ -9,37 +9,57 @@ import { useRecoilValue } from 'recoil';
 import { isLoggedInState, userState } from '@/recoil/auth';
 import toast from 'react-hot-toast';
 import CommentInput from '@/components/CommentInput/CommentInput';
+import Pagination from '@/components/Pagination/Pagination';
+import { timeAgo } from '@/util/timeAgo';
 function Board() {
     const navigate = useNavigate();
     const { animationId, boardId } = useParams();
+    const [page, setPage] = useState(null);
+    const [currentPage, setCurrentPage] = useState(0);
     const [board, setBoard] = useState<BoardResponse | null>(null);
     const [comments, setComments] = useState<Comment[] | null>(null);
     const [selectedComment, setSelectedComment] = useState(null);
+    const [replyCommentId, setReplyCommentId] = useState(null);
+    const replyCommentRef = useRef(null);
     const isLoggedIn = useRecoilValue(isLoggedInState);
     const user = useRecoilValue(userState);
-
+    const loadData = async () => {
+        try {
+            const data = await getBoard(animationId, boardId);
+            setBoard(data);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+    const loadComment = async () => {
+        try {
+            let data = null;
+            if (page) {
+                data = await getComments(boardId, page.endPage - currentPage, 20);
+            } else {
+                data = await getComments(boardId, currentPage, 20);
+            }
+            setComments(data.content);
+            setPage(data.page);
+        } catch (e) {
+            console.error(e);
+        }
+    };
     useEffect(() => {
-        const loadData = async () => {
-            try {
-                const data = await getBoard(animationId, boardId);
-                console.log(data);
-                setBoard(data);
-            } catch (err) {
-                console.error(err);
-            }
-        };
         loadData();
-        const loadComment = async () => {
-            try {
-                const data: WithPageResponse<Comment> = await getComments(boardId);
-                console.log(data);
-                setComments(data.content);
-            } catch (e) {
-                console.error(e);
-            }
-        };
         loadComment();
     }, []);
+    useEffect(() => {
+        loadComment();
+    }, [currentPage]);
+    useEffect(() => {
+        if (replyCommentId && replyCommentRef) {
+            replyCommentRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(() => {
+                setReplyCommentId(null);
+            }, 2000);
+        }
+    }, [comments]);
     const handleLike = async () => {
         try {
             if (!isLoggedIn) {
@@ -52,7 +72,6 @@ function Board() {
                 return;
             }
             const data = await likeBoard(animationId, boardId);
-            console.log(board, data);
             setBoard({ ...board, like: data });
         } catch (e) {
             console.error(e);
@@ -111,6 +130,9 @@ function Board() {
             };
             const response = await uploadComment(board.id, request);
             // setComments([...comments, response]);
+            setReplyCommentId(response.id);
+            loadComment();
+            setSelectedComment(null);
         } catch (e) {
             console.error(e);
         }
@@ -121,6 +143,14 @@ function Board() {
             return;
         }
         setSelectedComment(id);
+    };
+    const formatText = (text) => {
+        return text.split('\n').map((line, index) => (
+            <span key={index}>
+                {line}
+                <br />
+            </span>
+        ));
     };
     return (
         <div className={styles.container}>
@@ -170,28 +200,40 @@ function Board() {
                         </div>
                         <ul className={styles.comments}>
                             {comments.map((comment) => (
-                                <li className={`${styles.comments__item}`} key={comment.id}>
+                                <li
+                                    key={comment.id}
+                                    className={`${styles.comments__item} ${
+                                        comment.id == replyCommentId ? styles.blink : ''
+                                    }`}
+                                    ref={comment.id === replyCommentId ? replyCommentRef : null}
+                                >
                                     <div
                                         className={`${styles.comments__item__container}  ${
                                             styles['depth' + comment.depth]
                                         }`}
                                     >
-                                        <div className={styles.nickname}>{comment.nickname}</div>
-                                        <div className={styles.content}>{comment.content}</div>
-                                        <div className={styles.date}>{comment.writeDate}</div>
-                                        {isLoggedIn && comment.userId === user.id && (
-                                            <div className={styles.edit}>
+                                        <div className={styles.comments__item__box}>
+                                            <div className={styles.comments__item__container__info}>
                                                 <div
-                                                    className={styles.delete}
-                                                    onClick={() => handleDeleteComment(comment)}
+                                                    className={styles.nickname}
+                                                    onClick={() => handleReply(comment.id)}
                                                 >
-                                                    삭제
+                                                    {comment.nickname}
                                                 </div>
-                                                <div className={styles.reply} onClick={() => handleReply(comment.id)}>
-                                                    답글
-                                                </div>
+                                                <div className={styles.date}>{timeAgo(comment.writeDate)}</div>
+                                                {isLoggedIn && comment.userId === user.id && (
+                                                    <div className={styles.edit}>
+                                                        <div
+                                                            className={styles.delete}
+                                                            onClick={() => handleDeleteComment(comment)}
+                                                        >
+                                                            삭제
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>
-                                        )}
+                                            <div className={styles.content}>{formatText(comment.content)}</div>
+                                        </div>
                                     </div>
 
                                     {selectedComment === comment.id && (
@@ -200,6 +242,11 @@ function Board() {
                                 </li>
                             ))}
                         </ul>
+                        {page && (
+                            <div className={styles.pagination}>
+                                <Pagination page={page} onPageChange={setCurrentPage} perBlock={5} />
+                            </div>
+                        )}
                     </div>
                 )}
                 <CommentInput handleSubmit={handleSubmitComment} />

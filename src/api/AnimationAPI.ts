@@ -35,7 +35,6 @@ export const getHotAnimation = async (page: number, size: number): Promise<WithP
 export const likeAnimation = async (animationId: string) => {
     try {
         const response = await apiClient.post(`animations/${animationId}/favorite`);
-        console.log(response);
         return response.data.data;
     } catch (err) {
         console.error(err);
@@ -46,7 +45,6 @@ export const likeAnimation = async (animationId: string) => {
 export const unLikeAnimation = async (animationId: string) => {
     try {
         const response = await apiClient.delete(`animations/${animationId}/favorite`);
-        console.log(response);
         return response.data.data;
     } catch (err) {
         console.error(err);
@@ -57,7 +55,6 @@ export const unLikeAnimation = async (animationId: string) => {
 export const getUserLikeAnimation = async () => {
     try {
         const response = await apiClient.get(`animations/users`);
-        console.log(response);
         return response.data.data;
     } catch (err) {
         console.error(err);
@@ -68,7 +65,6 @@ export const getUserLikeAnimation = async () => {
 export const uploadAnimation = async (data: AnimationRequest) => {
     try {
         const response = await apiClient.post(`animations`, data);
-        console.log(response);
         return response.data.data;
     } catch (err) {
         console.error(err);
@@ -79,7 +75,6 @@ export const uploadAnimation = async (data: AnimationRequest) => {
 export const updateAnimation = async (data: AnimationRequest) => {
     try {
         const response = await apiClient.put(`animations/${data.id}`, data);
-        console.log(response);
         return response.data.data;
     } catch (err) {
         console.error(err);

@@ -165,11 +165,14 @@ $margin: 10px 0;
 
             .comments {
                 list-style: none;
-                padding: 0;
+                padding: 0 20px;
                 margin: 0;
-                @for $i from 0 to 6 {
+                @for $i from 0 to 20 {
                     .depth#{$i} {
                         padding-left: 20px * $i;
+                        @if $i > 4 {
+                            padding-left: 20px * 4;
+                        }
                         @if $i > 0 {
                             &::before {
                                 content: '↪';
@@ -178,17 +181,23 @@ $margin: 10px 0;
                     }
                 }
 
+                &__item.focusedComment {
+                    background-color: yellow;
+                }
+                &__box {
+                    width: 100%;
+                }
                 &__item__container {
                     display: flex;
                     flex-direction: row;
-                    padding: $padding;
-                    border-bottom: 1px solid #eee;
+                    padding: 5px 0;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
                     margin-bottom: $margin;
-
                     min-height: 60px;
-
-                    &:last-child {
-                        border-bottom: none;
+                    width: 100%;
+                    &__info {
+                        display: flex;
+                        gap: 5px;
                     }
 
                     .nickname {
@@ -196,6 +205,10 @@ $margin: 10px 0;
                         font-weight: bold;
                         color: $primary-color;
                         margin-bottom: 5px;
+
+                        &:hover {
+                            cursor: pointer;
+                        }
                     }
 
                     .content {
@@ -203,6 +216,9 @@ $margin: 10px 0;
                         font-size: 1rem;
                         color: $text-color;
                         margin-bottom: 10px;
+                        word-wrap: break-word;
+                        word-break: break-all;
+                        white-space: normal;
                     }
 
                     .date {
@@ -232,4 +248,21 @@ $margin: 10px 0;
             }
         }
     }
+}
+@keyframes blink {
+    0% {
+        background-color: $mainColor;
+        opacity: 0.6;
+    }
+    50% {
+        background-color: transparent;
+    }
+    100% {
+        background-color: $mainColor;
+        opacity: 0.6;
+    }
+}
+
+.blink {
+    animation: blink 1s ease-in-out;
 }
