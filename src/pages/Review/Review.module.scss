@@ -1,0 +1,155 @@
+// .container {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+// }
+
+// .boards {
+//     width: 100%;
+//     max-width: 800px;
+//     background-color: #f9f9f9;
+//     border-radius: 10px;
+//     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+//     padding: 20px;
+// }
+
+// .boards__list {
+//     list-style: none;
+//     padding: 0;
+//     margin: 0;
+// }
+
+// .boards__list__item {
+//     display: flex;
+//     flex-direction: column;
+//     padding: 10px;
+//     margin-bottom: 10px;
+//     background-color: #fff;
+//     border-radius: 5px;
+//     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+// }
+
+// .boards__list__item__title {
+//     font-size: 18px;
+//     font-weight: bold;
+//     margin-bottom: 5px;
+// }
+
+// .boards__list__item__hit,
+// .boards__list__item__nickname,
+// .boards__list__item__writedate {
+//     font-size: 14px;
+//     color: #555;
+// }
+
+// .boards__list__item__hit {
+//     margin-bottom: 5px;
+// }
+
+// .boards__list__item__nickname {
+//     margin-bottom: 5px;
+// }
+
+// Variables for easy customization
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: $background-color;
+    border-radius: $border-radius;
+    @include shadow;
+}
+
+.boards {
+    &__nav {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 2px solid $primary-color;
+        &__list {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 10px;
+            &__text {
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: $text-color;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+            &__subtext {
+                font-size: 1rem;
+                font-weight: bold;
+                color: $text-color;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+
+        &__button {
+            &__create {
+                background-color: $mainColor;
+                color: #fff;
+                padding: 10px 20px;
+                font-size: 1rem;
+                border: none;
+                border-radius: $border-radius;
+                cursor: pointer;
+                transition: background-color 0.3s;
+
+                &:hover {
+                    background-color: $button-hover-color;
+                }
+
+                &:active {
+                    background-color: $button-active-color;
+                }
+            }
+        }
+    }
+
+    &__list {
+        list-style: none;
+        padding: 0;
+        margin: 20px 0 0;
+
+        .emptyMessage {
+            text-align: center;
+        }
+
+        .boards__list__item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
+            padding: 15px;
+            border-bottom: 1px solid lighten($background-color, 10%);
+            transition: background-color 0.3s;
+
+            &:hover {
+                background-color: lighten($background-color, 5%);
+            }
+
+            &__title {
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+
+            &__hit,
+            &__nickname,
+            &__writedate {
+                font-size: 14px;
+                color: #555;
+            }
+        }
+    }
+}

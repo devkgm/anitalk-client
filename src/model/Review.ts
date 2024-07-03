@@ -1,4 +1,4 @@
-interface review {
+interface Review {
     id: number;
     animationId: number;
     userId: number;

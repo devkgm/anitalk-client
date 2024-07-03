@@ -8,6 +8,7 @@ import Info from './components/Info/Info';
 import Board from './components/Board/Board';
 import Chatting from '@/components/Chatting/Chatting';
 import Footer from '@/components/Footer/Footer';
+import Review from '../Review/Review';
 function Animation() {
     const { animationId } = useParams();
     const [animation, setAnimation] = useState<AnimationResponse>(null);
@@ -33,7 +34,8 @@ function Animation() {
                 </div>
                 <div className={styles.section}>
                     <div className={styles.main}>
-                        <Board animationId={animation.id} />
+                        <Review animationId={animation.id} />
+                        {/* <Board animationId={animation.id} /> */}
                     </div>
                     <div className={styles.sub}>
                         <Chatting roomId={animation.id} />
