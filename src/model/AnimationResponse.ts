@@ -4,4 +4,5 @@ interface AnimationResponse extends Animation {
         isFavorite: boolean;
         userId: string;
     };
+    isReview: boolean;
 }

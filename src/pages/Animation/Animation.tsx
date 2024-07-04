@@ -9,9 +9,11 @@ import Board from './components/Board/Board';
 import Chatting from '@/components/Chatting/Chatting';
 import Footer from '@/components/Footer/Footer';
 import Review from '../Review/Review';
+import ReviewInput from '../Review/ReviewInput/ReviewInput';
 function Animation() {
     const { animationId } = useParams();
     const [animation, setAnimation] = useState<AnimationResponse>(null);
+    const [nav, setNav] = useState('board');
     //애니메이션 데이터 가져오기
     useEffect(() => {
         const getData = async () => {
@@ -34,8 +36,20 @@ function Animation() {
                 </div>
                 <div className={styles.section}>
                     <div className={styles.main}>
-                        <Review animationId={animation.id} />
-                        {/* <Board animationId={animation.id} /> */}
+                        <div className={styles.navbar}>
+                            <div className={styles.navbar__buttons}>
+                                <span onClick={() => setNav('board')}>게시글 보기</span>
+                                <span onClick={() => setNav('review')}>리뷰 보기</span>
+                            </div>
+                        </div>
+                        {nav == 'board' ? (
+                            <Board animationId={animation.id} />
+                        ) : (
+                            <>
+                                <Review animationId={animation.id} />
+                                {!animation.isReview && <ReviewInput animationId={animationId} />}
+                            </>
+                        )}
                     </div>
                     <div className={styles.sub}>
                         <Chatting roomId={animation.id} />

@@ -51,7 +51,6 @@ function Review({ animationId }) {
                         <Pagination page={page} perBlock={10} onPageChange={setCurrentPage} />
                     </div>
                 )}
-                <ReviewInput animationId={animationId} />
             </div>
         </div>
     );
