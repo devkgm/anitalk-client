@@ -23,7 +23,7 @@ function Home() {
     const loadAnimations = async () => {
         try {
             setIsLoading(true);
-            const data = await getAnimations(page, SIZE);
+            const data = await getAnimations({ page: page, size: SIZE });
             setAnimations((prev) => (prev ? [...prev, ...data] : data));
             setIsLoading(false);
         } catch (e) {

@@ -35,7 +35,7 @@ function Chatting({ roomId }: Prop) {
                 stmpClient.current.disconnect();
             }
         };
-    }, []);
+    }, [roomId]);
     useEffect(() => {
         if (chatListRef.current) {
             chatListRef.current.scrollTop = chatListRef.current.scrollHeight;

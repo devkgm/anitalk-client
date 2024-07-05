@@ -30,7 +30,7 @@ function Review({ animationId }) {
     const handleSubmit = () => {};
     useEffect(() => {
         loadReviews();
-    }, [currentPage]);
+    }, [currentPage, animationId]);
     return (
         <div className={styles.container}>
             <div className={styles.boards}>

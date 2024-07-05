@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './Header.module.scss';
 import { useRecoilValue } from 'recoil';
 import { isLoggedInState, userState } from '@/recoil/auth';
+import Search from './components/Search/Search';
 function Header() {
     const isLoggedIn = useRecoilValue(isLoggedInState);
     const user = useRecoilValue(userState);
@@ -19,7 +20,7 @@ function Header() {
             </div>
             <div className={styles.end}>
                 <div className={styles.search}>
-                    <button className={`material-symbols-outlined`}>search</button>
+                    <Search />
                 </div>
                 <div className={styles.signin}>
                     {isLoggedIn ? (

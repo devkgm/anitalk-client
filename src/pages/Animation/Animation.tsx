@@ -25,7 +25,7 @@ function Animation() {
             }
         };
         getData();
-    }, []);
+    }, [animationId]);
     if (!animation) return <Loading />;
     return (
         <div className={styles.container}>
@@ -38,8 +38,8 @@ function Animation() {
                     <div className={styles.main}>
                         <div className={styles.navbar}>
                             <div className={styles.navbar__buttons}>
-                                <span onClick={() => setNav('board')}>게시글 보기</span>
-                                <span onClick={() => setNav('review')}>리뷰 보기</span>
+                                <span onClick={() => setNav('board')}>게시판</span>
+                                <span onClick={() => setNav('review')}>리뷰</span>
                             </div>
                         </div>
                         {nav == 'board' ? (

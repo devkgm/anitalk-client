@@ -26,7 +26,7 @@ function Board({ animationId }: Prop) {
 
     useEffect(() => {
         loadBoards();
-    }, [currentPage, type]);
+    }, [currentPage, type, animationId]);
     const loadBoards = async () => {
         try {
             const data: WithPageResponse<Board> = await getBoards(animationId, currentPage, PER_PAGE, type);

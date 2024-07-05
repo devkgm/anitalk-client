@@ -1,8 +1,8 @@
 import { apiClient } from '@/util/apiClient';
 
-export const getAnimations = async (page: number, size: number): Promise<AnimationResponse> => {
+export const getAnimations = async ({ page = 0, size = 10, search = '' }): Promise<AnimationResponse> => {
     try {
-        const response = await apiClient.get(`/animations?page=${page}&size=${size}`);
+        const response = await apiClient.get(`/animations?page=${page}&size=${size}&search=${search}`);
         const data: AnimationResponse = response.data.data.content;
         return data;
     } catch (error) {
