@@ -33,17 +33,13 @@ function Home() {
     };
     useEffect(() => {
         if (!observer.current) {
-            observer.current = new IntersectionObserver(
-                (entries) => {
-                    entries.forEach((entry) => {
-                        if (entry.isIntersecting && !isLoading) {
-                            ('Observed');
-                            setPage((prev) => prev + 1);
-                        }
-                    });
-                },
-                { threshold: 1 }
-            );
+            observer.current = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting && !isLoading) {
+                        setPage((prev) => prev + 1);
+                    }
+                });
+            });
         }
         if (aniCardRef) {
             observer.current.observe(aniCardRef.current);
