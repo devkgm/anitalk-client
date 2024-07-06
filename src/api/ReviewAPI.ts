@@ -22,3 +22,13 @@ export const submitReview = async (animationId, data) => {
         throw new Error('리뷰 등록 실패');
     }
 };
+
+export const getUserReview = async () => {
+    try {
+        const response = await apiClient.get(`reviews/users`);
+        return response.data.data;
+    } catch (err) {
+        console.error(err);
+        throw new Error('유저 리뷰 가져오기 실패');
+    }
+};

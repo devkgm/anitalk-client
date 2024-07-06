@@ -14,6 +14,8 @@ import { getUserLikeAnimation } from '@/api/AnimationAPI';
 import AnimationCard from '../Home/components/AnimationCard/AnimationCard';
 import { selectedArticleState } from '@/recoil/mypage';
 import Pagination from '@/components/Pagination/Pagination';
+import ReviewCard from '../Review/ReviewCard/ReviewCard';
+import { getUserReview } from '@/api/ReviewAPI';
 
 function MyPage() {
     const navigate = useNavigate();
@@ -22,9 +24,10 @@ function MyPage() {
     const [boards, setBoards] = useState<MyBoardVO[] | null>(null);
     const [comments, setComments] = useState<Comment[]>([]);
     const [animations, setAnimations] = useState<AnimationResponse[]>([]);
+    const [reviews, setReviews] = useState<ReviewResponse[]>([]);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [modalContent, setModalContent] = useState('');
-    const [activeTab, setActiveTab] = useRecoilState<'board' | 'comment' | 'favorite'>(selectedArticleState);
+    const [activeTab, setActiveTab] = useRecoilState<'board' | 'comment' | 'favorite' | 'review'>(selectedArticleState);
     const [page, setPage] = useState(null);
     const [currentPage, setCurrentPage] = useState(0);
     useEffect(() => {
@@ -32,6 +35,7 @@ function MyPage() {
             activeTab == 'board' && loadBoards();
             activeTab == 'comment' && loadComments();
             activeTab == 'favorite' && loadAnimations();
+            activeTab == 'review' && loadReviews();
         }
     }, [currentPage, user, activeTab]);
     const loadBoards = async () => {
@@ -56,6 +60,15 @@ function MyPage() {
         try {
             const data = await getUserLikeAnimation();
             setAnimations(data.content);
+        } catch (e) {
+            console.error(e);
+        }
+    };
+    const loadReviews = async () => {
+        try {
+            const data = await getUserReview();
+            console.log(data);
+            setReviews(data.content);
         } catch (e) {
             console.error(e);
         }
@@ -86,7 +99,7 @@ function MyPage() {
     const toggleModal = () => {
         setShowModal(!showModal);
     };
-    const handleTapChange = (tab: 'board' | 'comment' | 'favorite') => {
+    const handleTapChange = (tab: 'board' | 'comment' | 'favorite' | 'review') => {
         setActiveTab(tab);
         setCurrentPage(0);
     };
@@ -116,6 +129,12 @@ function MyPage() {
                         onClick={() => handleTapChange('favorite')}
                     >
                         즐겨찾기
+                    </button>
+                    <button
+                        className={`${styles.navButton} ${activeTab === 'review' && styles.active}`}
+                        onClick={() => handleTapChange('review')}
+                    >
+                        리뷰
                     </button>
                 </div>
                 {activeTab === 'board' && (
@@ -180,6 +199,24 @@ function MyPage() {
                                             onClick={() => navigate(`/animations/${ani.id}`)}
                                         >
                                             <AnimationCard data={ani} key={ani.id + ani.name} />
+                                        </li>
+                                    ))}
+                            </ul>
+                        </div>
+                    </div>
+                )}
+                {activeTab === 'review' && (
+                    <div className={styles.content}>
+                        <div className={styles.content}>
+                            <ul className={styles.aniList}>
+                                {activeTab === 'review' &&
+                                    reviews.map((review) => (
+                                        <li
+                                            className={styles.aniListItem}
+                                            key={review.id}
+                                            onClick={() => navigate(`/animations/${review.animationId}`)}
+                                        >
+                                            <ReviewCard review={review} key={review.id} />
                                         </li>
                                     ))}
                             </ul>
