@@ -35,7 +35,7 @@ function Board() {
         try {
             let data = null;
             console.log(page, currentPage);
-            if (page) {
+            if (page && currentPage != -1) {
                 data = await getComments(boardId, page.endPage - currentPage, 20);
             } else {
                 data = await getComments(boardId, 0, 20);
@@ -55,7 +55,8 @@ function Board() {
         loadComment();
     }, [currentPage]);
     useEffect(() => {
-        if (replyCommentId && replyCommentRef) {
+        console.log(replyCommentRef);
+        if (replyCommentId && replyCommentRef.current) {
             replyCommentRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
             setTimeout(() => {
                 setReplyCommentId(null);
